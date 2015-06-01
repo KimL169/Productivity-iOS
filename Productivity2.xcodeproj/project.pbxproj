@@ -15,6 +15,9 @@
 		3B2DEE861ACE64C30065F39D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3B2DEE851ACE64C30065F39D /* Images.xcassets */; };
 		3B2DEE891ACE64C30065F39D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B2DEE871ACE64C30065F39D /* LaunchScreen.xib */; };
 		3B2DEE951ACE64C30065F39D /* Productivity2Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B2DEE941ACE64C30065F39D /* Productivity2Tests.m */; };
+		3B2DEEA41ACE67050065F39D /* MainGoalTimerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B2DEEA31ACE67050065F39D /* MainGoalTimerCell.xib */; };
+		3B2DEEA71ACE67550065F39D /* MainGoalTimerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B2DEEA61ACE67550065F39D /* MainGoalTimerCell.m */; };
+		3B2DEEAA1ACED47C0065F39D /* CountDownTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B2DEEA91ACED47C0065F39D /* CountDownTimer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +45,11 @@
 		3B2DEE8E1ACE64C30065F39D /* Productivity2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Productivity2Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B2DEE931ACE64C30065F39D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3B2DEE941ACE64C30065F39D /* Productivity2Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Productivity2Tests.m; sourceTree = "<group>"; };
+		3B2DEEA31ACE67050065F39D /* MainGoalTimerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MainGoalTimerCell.xib; path = ../MainGoalTimerCell.xib; sourceTree = "<group>"; };
+		3B2DEEA51ACE67550065F39D /* MainGoalTimerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainGoalTimerCell.h; path = ../MainGoalTimerCell.h; sourceTree = "<group>"; };
+		3B2DEEA61ACE67550065F39D /* MainGoalTimerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainGoalTimerCell.m; path = ../MainGoalTimerCell.m; sourceTree = "<group>"; };
+		3B2DEEA81ACED47C0065F39D /* CountDownTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountDownTimer.h; sourceTree = "<group>"; };
+		3B2DEEA91ACED47C0065F39D /* CountDownTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountDownTimer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,9 +95,14 @@
 				3B2DEE7A1ACE64C30065F39D /* AppDelegate.m */,
 				3B2DEE7F1ACE64C30065F39D /* ViewController.h */,
 				3B2DEE801ACE64C30065F39D /* ViewController.m */,
+				3B2DEEA81ACED47C0065F39D /* CountDownTimer.h */,
+				3B2DEEA91ACED47C0065F39D /* CountDownTimer.m */,
 				3B2DEE821ACE64C30065F39D /* Main.storyboard */,
 				3B2DEE851ACE64C30065F39D /* Images.xcassets */,
 				3B2DEE871ACE64C30065F39D /* LaunchScreen.xib */,
+				3B2DEEA51ACE67550065F39D /* MainGoalTimerCell.h */,
+				3B2DEEA61ACE67550065F39D /* MainGoalTimerCell.m */,
+				3B2DEEA31ACE67050065F39D /* MainGoalTimerCell.xib */,
 				3B2DEE7C1ACE64C30065F39D /* Productivity2.xcdatamodeld */,
 				3B2DEE751ACE64C30065F39D /* Supporting Files */,
 			);
@@ -205,6 +218,7 @@
 				3B2DEE841ACE64C30065F39D /* Main.storyboard in Resources */,
 				3B2DEE891ACE64C30065F39D /* LaunchScreen.xib in Resources */,
 				3B2DEE861ACE64C30065F39D /* Images.xcassets in Resources */,
+				3B2DEEA41ACE67050065F39D /* MainGoalTimerCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -223,9 +237,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				3B2DEE7B1ACE64C30065F39D /* AppDelegate.m in Sources */,
+				3B2DEEAA1ACED47C0065F39D /* CountDownTimer.m in Sources */,
 				3B2DEE781ACE64C30065F39D /* main.m in Sources */,
 				3B2DEE811ACE64C30065F39D /* ViewController.m in Sources */,
 				3B2DEE7E1ACE64C30065F39D /* Productivity2.xcdatamodeld in Sources */,
+				3B2DEEA71ACE67550065F39D /* MainGoalTimerCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
