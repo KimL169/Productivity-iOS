@@ -9,10 +9,14 @@
 #import "ViewController.h"
 #import "MainGoalTimerCell.h"
 #import "CountDownTimer.h"
+#import "Goal.h"
+
 @interface ViewController ()
 
 @property (nonatomic, strong) CountDownTimer *timer;
 @property (nonatomic, strong) NSIndexPath *activeGoalIndex;
+@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, strong) NSManagedObjectContext *context;
 
 #define CELL_HEIGHT 120
 
@@ -27,13 +31,36 @@
     
 //TODO: we need to specify a context?
     [self.timer addObserver:self forKeyPath:@"secondsLeft" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
+    
+    //insert a test goal
+    Goal *newGoal = [NSEntityDescription insertNewObjectForEntityForName:@"Goal" inManagedObjectContext:[self managedObjectContext]];
+    newGoal.name = @"hello";
+    newGoal.totalTimeInSeconds = [NSNumber numberWithInt:1000];
+        
+    NSError *error = nil;
+    if ([self.managedObjectContext hasChanges]){
+        if (![self.managedObjectContext save: &error]) {//save failed
+            NSLog(@"Save failed: %@", [error localizedDescription]);
+        } else {
+            NSLog(@"Save succesfull");
+        }
+    }
+//TODO: not yet finished the load of the goals
 }
-
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return 10;
+    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections]objectAtIndex:section];
+    // Return the number of rows in the section.
+    return [sectionInfo numberOfObjects];
 }
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    
+    //return the number of sections in both the bodystat and diet plan fetchedresultscontroller.
+    return [[self.fetchedResultsController sections]count];
+}
+
 
 /**********
 * Observes the changes in the states of keyvalue objects
@@ -56,16 +83,13 @@
     
     //get the active goal from the active cell property.
     MainGoalTimerCell *cell = (MainGoalTimerCell *)[self.tableView cellForRowAtIndexPath:_activeGoalIndex];
-    cell.timeLabel.text = [NSString stringWithFormat:@"%d", [self.timer.secondsLeft integerValue]];
+    cell.timeLabel.text = [NSString stringWithFormat:@"%d", [self.timer.secondsLeft intValue]];
     
-}
-
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    
-    return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    Goal *goal = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     static NSString *cellIdentifier = @"timerCell";
     
@@ -193,6 +217,33 @@
     [self.tableView endUpdates];
 }
 
-
+- (NSFetchedResultsController *)fetchedResultsController {
+    if (_fetchedResultsController != nil) {
+        return _fetchedResultsController;
+    }
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]init];
+    
+    _context = [self managedObjectContext];
+    
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Goal" inManagedObjectContext:_context];
+    
+    //set the fetch request to the Patient entity
+    [fetchRequest setEntity:entity];
+    
+    //sort on patients last name, ascending;
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc]initWithKey:@"name" ascending:YES];
+    
+    //make an array of the descriptor because the fetchrequest argument takes an array.
+    NSArray *sortDescriptors = [[NSArray alloc]initWithObjects:sortDescriptor, nil];
+    
+    //now assign the sort descriptors to the fetchrequest.
+    fetchRequest.sortDescriptors = sortDescriptors;
+    
+    _fetchedResultsController = [[NSFetchedResultsController alloc]initWithFetchRequest:fetchRequest managedObjectContext:_context sectionNameKeyPath:nil cacheName:nil];
+    
+    _fetchedResultsController.delegate = self;
+    
+    return _fetchedResultsController;
+}
 
 @end

@@ -52,15 +52,7 @@ int hours, minutes, seconds;
     if ([self.secondsLeft integerValue]> 0) {
         secondsLeft--;
         [self setValue:[NSNumber numberWithInt:secondsLeft] forKey:@"secondsLeft"];
-//        int hours = secondsLeft / 3600;
-//        int minutes = (secondsLeft % 3600) / 60;
-//        int seconds = (secondsLeft % 3600) % 60;
-//        
-//        self.hours = secondsLeft / 3600;
-//        self.minutes = (secondsLeft % 3600) / 60;
-//        self.seconds = (secondsLeft % 3600) % 60;
     }
-    
 }
 
 - (NSInteger)minutesLeft {
