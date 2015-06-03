@@ -13,7 +13,7 @@
 //init method
 - (id)init: (NSInteger)startingSecondsLeft rounds:(NSInteger)rounds;
 
-@property (nonatomic) int secondsLeft;
+@property (nonatomic) NSNumber *secondsLeft;
 @property (nonatomic) int startingSecondsLeft;
 @property (nonatomic) int startingRounds;
 @property (nonatomic) int roundsLeft;

@@ -17,7 +17,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *totalTimeLabel;
 @property (weak, nonatomic) IBOutlet UIView *completionView;
 @property (weak, nonatomic) IBOutlet UILabel *roundsLabel;
-@property (strong, nonatomic) CountDownTimer *timer;
 
-- (void)updateTimeLabel;
 @end

@@ -18,10 +18,11 @@ int hours, minutes, seconds;
         
         //get the users prefered seconds left and the user's prefered round count.
         self.startingSecondsLeft = startingSecondsLeft;
-        self.secondsLeft = self.startingSecondsLeft;
+        [self setValue:[NSNumber numberWithInt:startingSecondsLeft] forKey:@"secondsLeft"];
         self.startingRounds = rounds;
         self.roundsLeft = rounds;
         
+        NSLog(@"secondsLeft: %d", [self.secondsLeft intValue]);
         //set the hours/minutes/seconds
         self.hours = self.minutes = self.seconds = 0;
     }
@@ -31,7 +32,7 @@ int hours, minutes, seconds;
 
 - (void)resetCounter {
     //reset the secondsLeftCounter and update the counter.
-    self.secondsLeft = self.startingSecondsLeft;
+    [self setValue:[NSNumber numberWithInt:self.startingSecondsLeft] forKey:@"secondsLeft"];
     self.hours = self.minutes = self.seconds = 0;
     [self startTimer];
 }
@@ -46,13 +47,19 @@ int hours, minutes, seconds;
 
 - (void)updateCounter {
     
-    if (self.secondsLeft > 0) {
-        self.secondsLeft --;
-        
-        self.hours = self.secondsLeft / 3600;
-        self.minutes = (self.secondsLeft % 3600) / 60;
-        self.seconds = (self.secondsLeft % 3600) % 60;
+    int secondsLeft = [self.secondsLeft intValue];
+    if ([self.secondsLeft integerValue]> 0) {
+        secondsLeft--;
+        [self setValue:[NSNumber numberWithInt:secondsLeft] forKey:@"secondsLeft"];
+//        int hours = secondsLeft / 3600;
+//        int minutes = (secondsLeft % 3600) / 60;
+//        int seconds = (secondsLeft % 3600) % 60;
+//        
+//        self.hours = secondsLeft / 3600;
+//        self.minutes = (secondsLeft % 3600) / 60;
+//        self.seconds = (secondsLeft % 3600) % 60;
     }
+    
 }
 
 @end
