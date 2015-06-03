@@ -30,10 +30,11 @@ int hours, minutes, seconds;
     return self;
 }
 
-- (void)resetCounter {
+- (void)resetTimer {
     //reset the secondsLeftCounter and update the counter.
     [self setValue:[NSNumber numberWithInt:self.startingSecondsLeft] forKey:@"secondsLeft"];
     self.hours = self.minutes = self.seconds = 0;
+    [self.timer invalidate];
     [self startTimer];
 }
 
@@ -60,6 +61,14 @@ int hours, minutes, seconds;
 //        self.seconds = (secondsLeft % 3600) % 60;
     }
     
+}
+
+- (NSInteger)minutesLeft {
+    return ([_secondsLeft intValue] % 3600) / 60;
+}
+
+- (NSInteger)hoursLeft {
+    return [_secondsLeft intValue] / 3600;
 }
 
 @end

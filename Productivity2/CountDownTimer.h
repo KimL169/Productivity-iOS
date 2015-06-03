@@ -25,7 +25,7 @@
 @property (nonatomic) int seconds;
 
 - (void)startTimer;
-- (void)resetCounter;
+- (void)resetTimer;
 - (int)roundsLeft;
 
 @end
