@@ -6,9 +6,15 @@
 //  Copyright (c) 2015 Kim. All rights reserved.
 //
 
-#import "CountDownTimer.h"
+#import "GoalTimer.h"
 
-@implementation CountDownTimer
+@implementation GoalTimer
+
+
+typedef NS_ENUM(NSInteger, timerMode){
+    CountDownTimerCountDownMode;
+    
+};
 
 int hours, minutes, seconds;
 
@@ -41,6 +47,11 @@ return self;
 - (int)roundsLeft { return self.roundsLeft; }
 
 -(void)startTimer {
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updateCounter) userInfo:nil repeats:YES];
+   [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+}
+
+-(void)startTimerWithCount:(int)seconds mode:(NSString *){
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updateCounter) userInfo:nil repeats:YES];
    [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
 }

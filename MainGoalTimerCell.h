@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CountDownTimer.h"
+#import "GoalTimer.h"
 
 @interface MainGoalTimerCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;

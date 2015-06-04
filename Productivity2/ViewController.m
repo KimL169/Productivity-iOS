@@ -8,12 +8,12 @@
 
 #import "ViewController.h"
 #import "MainGoalTimerCell.h"
-#import "CountDownTimer.h"
+#import "GoalTimer.h"
 #import "Goal.h"
 
 @interface ViewController ()
 
-@property (nonatomic, strong) CountDownTimer *timer;
+@property (nonatomic, strong) GoalTimer *timer;
 @property (nonatomic, strong) NSIndexPath *activeGoalIndex;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) NSManagedObjectContext *context;
@@ -27,7 +27,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    self.timer = [[CountDownTimer alloc]init:10 rounds:1];
+    self.timer = [[GoalTimer alloc]init:10 rounds:1];
     
 //TODO: we need to specify a context?
     [self.timer addObserver:self forKeyPath:@"secondsLeft" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];

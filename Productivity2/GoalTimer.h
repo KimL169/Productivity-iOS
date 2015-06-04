@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface CountDownTimer : NSObject
+@interface GoalTimer : NSObject
 
 //init method
 - (id)init: (NSInteger)startingSecondsLeft rounds:(NSInteger)rounds;
