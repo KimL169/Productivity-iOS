@@ -51,7 +51,21 @@
         abort();
     }
     
+    
 }
+//TODO: save method needs to be somewhere else!
+- (void)viewDidDisappear:(BOOL)animated {
+        
+    NSError *error = nil;
+    if ([self.managedObjectContext hasChanges]){
+        if (![self.managedObjectContext save: &error]) {//save failed
+            NSLog(@"Save failed: %@", [error localizedDescription]);
+        } else {
+            NSLog(@"Save succesfull");
+        }
+    }
+}
+
 
 #pragma mark - timer methods
 /**********
@@ -63,6 +77,11 @@
     if (object == self.timer && [keyPath isEqualToString:@"secondsLeft"]){
         //grab the active cell and adjust the label
         [self updateCellTimerLabel];
+        
+        //get the active goal and adjust the time value
+        Goal* activeGoal = [self.fetchedResultsController objectAtIndexPath:_activeGoalIndex];
+       
+        activeGoal.totalTimeInSeconds = self.timer.secondsLeft;
     }
     
 }

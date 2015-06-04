@@ -27,7 +27,7 @@ int hours, minutes, seconds;
         self.hours = self.minutes = self.seconds = 0;
     }
     
-    return self;
+return self;
 }
 
 - (void)resetTimer {
