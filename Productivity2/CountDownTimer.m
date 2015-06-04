@@ -17,10 +17,10 @@ int hours, minutes, seconds;
     if (self = [super init]) {
         
         //get the users prefered seconds left and the user's prefered round count.
-        self.startingSecondsLeft = startingSecondsLeft;
-        [self setValue:[NSNumber numberWithInt:startingSecondsLeft] forKey:@"secondsLeft"];
-        self.startingRounds = rounds;
-        self.roundsLeft = rounds;
+        self.startingSecondsLeft = (int)startingSecondsLeft;
+        [self setValue:[NSNumber numberWithInt:(int)startingSecondsLeft] forKey:@"secondsLeft"];
+        self.startingRounds = (int)rounds;
+        self.roundsLeft = (int)rounds;
         
         NSLog(@"secondsLeft: %d", [self.secondsLeft intValue]);
         //set the hours/minutes/seconds

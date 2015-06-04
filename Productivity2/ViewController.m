@@ -33,35 +33,27 @@
     [self.timer addObserver:self forKeyPath:@"secondsLeft" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
     
     //insert a test goal
-    Goal *newGoal = [NSEntityDescription insertNewObjectForEntityForName:@"Goal" inManagedObjectContext:[self managedObjectContext]];
-    newGoal.name = @"hello";
-    newGoal.totalTimeInSeconds = [NSNumber numberWithInt:1000];
-        
+//    Goal *newGoal = [NSEntityDescription insertNewObjectForEntityForName:@"Goal" inManagedObjectContext:[self managedObjectContext]];
+//    newGoal.name = @"hello";
+//    newGoal.totalTimeInSeconds = [NSNumber numberWithInt:1000];
+//        
+//    if ([self.managedObjectContext hasChanges]){
+//        if (![self.managedObjectContext save: &error]) {//save failed
+//            NSLog(@"Save failed: %@", [error localizedDescription]);
+//        } else {
+//            NSLog(@"Save succesfull");
+//        }
+//    }
+//    
     NSError *error = nil;
-    if ([self.managedObjectContext hasChanges]){
-        if (![self.managedObjectContext save: &error]) {//save failed
-            NSLog(@"Save failed: %@", [error localizedDescription]);
-        } else {
-            NSLog(@"Save succesfull");
-        }
+    if (![[self fetchedResultsController] performFetch:&error]) {
+        NSLog(@"Error fetching: %@", error);
+        abort();
     }
-//TODO: not yet finished the load of the goals
-}
-
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections]objectAtIndex:section];
-    // Return the number of rows in the section.
-    return [sectionInfo numberOfObjects];
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    
-    //return the number of sections in both the bodystat and diet plan fetchedresultscontroller.
-    return [[self.fetchedResultsController sections]count];
-}
-
-
+#pragma mark - timer methods
 /**********
 * Observes the changes in the states of keyvalue objects
 * Specifically the Timer changes are monitored here.
@@ -87,9 +79,24 @@
     
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+#pragma mark - Tableview methods
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    Goal *goal = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections]objectAtIndex:section];
+    // Return the number of rows in the section.
+    return [sectionInfo numberOfObjects];
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    
+    //return the number of sections in both the bodystat and diet plan fetchedresultscontroller.
+    return [[self.fetchedResultsController sections]count];
+}
+
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *cellIdentifier = @"timerCell";
     
@@ -119,7 +126,10 @@
         [self.timer.timer invalidate];
         
     } else {
-        //save the previous time to the relevant goal  (???YES??)
+        
+        //set the goal secondsLeft or seconds passed to the right amount.
+        Goal *activeGoal = [self.fetchedResultsController objectAtIndexPath:_activeGoalIndex];
+        activeGoal.totalTimeInSeconds = self.timer.secondsLeft;
         
        //append the new active goal to the active goal property
         _activeGoalIndex = [self.tableView indexPathForCell:cell];
@@ -127,6 +137,16 @@
         //initialize a new timer
         [self.timer resetTimer];
         //start the timer for the newly selected goal.
+    }
+    
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(MainGoalTimerCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    Goal *goal = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    cell.nameLabel.text = goal.name;
+    if (goal.totalTimeInSeconds) {
+        cell.timeLabel.text = [NSString stringWithFormat:@"%d", [goal.totalTimeInSeconds intValue]];
     }
     
 }
