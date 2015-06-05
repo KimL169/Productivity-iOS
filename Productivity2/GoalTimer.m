@@ -11,11 +11,6 @@
 @implementation GoalTimer
 
 
-typedef NS_ENUM(NSInteger, timerMode){
-    CountDownTimerCountDownMode;
-    
-};
-
 int hours, minutes, seconds;
 
 - (id)init: (NSInteger)startingSecondsLeft rounds:(NSInteger)rounds{
@@ -24,21 +19,21 @@ int hours, minutes, seconds;
         
         //get the users prefered seconds left and the user's prefered round count.
         self.startingSecondsLeft = (int)startingSecondsLeft;
-        [self setValue:[NSNumber numberWithInt:(int)startingSecondsLeft] forKey:@"secondsLeft"];
+        [self setValue:[NSNumber numberWithInt:(int)startingSecondsLeft] forKey:@"countingSeconds"];
         self.startingRounds = (int)rounds;
         self.roundsLeft = (int)rounds;
         
-        NSLog(@"secondsLeft: %d", [self.secondsLeft intValue]);
+        NSLog(@"secondsLeft: %d", [self.countingSeconds intValue]);
         //set the hours/minutes/seconds
         self.hours = self.minutes = self.seconds = 0;
     }
     
-return self;
+    return self;
 }
 
 - (void)resetTimer {
     //reset the secondsLeftCounter and update the counter.
-    [self setValue:[NSNumber numberWithInt:self.startingSecondsLeft] forKey:@"secondsLeft"];
+    [self setValue:[NSNumber numberWithInt:self.startingSecondsLeft] forKey:@"countingSeconds"];
     self.hours = self.minutes = self.seconds = 0;
     [self.timer invalidate];
     [self startTimer];
@@ -46,32 +41,50 @@ return self;
 
 - (int)roundsLeft { return self.roundsLeft; }
 
--(void)startTimer {
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updateCounter) userInfo:nil repeats:YES];
-   [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
-}
-
--(void)startTimerWithCount:(int)seconds mode:(NSString *){
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updateCounter) userInfo:nil repeats:YES];
-   [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
-}
-
-
-- (void)updateCounter {
+-(void)startTimerWithCount:(int)seconds mode:(goalMode)mode{
     
-    int secondsLeft = [self.secondsLeft intValue];
-    if ([self.secondsLeft integerValue]> 0) {
+    if (!seconds) {seconds = 0;}
+    self.hours = self.minutes = self.seconds = 0;
+   
+    switch (mode) {
+        case GoalStopWatchMode:
+            self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(stopWatchTimerUpdate) userInfo:nil repeats:YES];
+            self.countingSeconds = [NSNumber numberWithInt:seconds];
+            break;
+        case GoalCountDownMode:
+            self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countDownTimerUpdate) userInfo:nil repeats:YES];
+            self.countingSeconds = [NSNumber numberWithInt:seconds];
+            break;
+        default:
+            self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(stopWatchTimerUpdate) userInfo:nil repeats:YES];
+            self.countingSeconds = [NSNumber numberWithInt:seconds];
+            break;
+    }
+   [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+}
+
+
+- (void)countDownTimerUpdate {
+//TODO: is this right?
+    int secondsLeft = [self.countingSeconds intValue];
+    if ([self.countingSeconds integerValue]> 0) {
         secondsLeft--;
-        [self setValue:[NSNumber numberWithInt:secondsLeft] forKey:@"secondsLeft"];
+        [self setValue:[NSNumber numberWithInt:secondsLeft] forKey:@"countingSeconds"];
     }
 }
 
+- (void)stopWatchTimerUpdate {
+    int count = [[self valueForKey:@"countingSeconds"] intValue];
+    [self setValue:[NSNumber numberWithInt:++count] forKey:@"countingSeconds"];
+    NSLog(@"count: %d", count);
+}
+
 - (NSInteger)minutesLeft {
-    return ([_secondsLeft intValue] % 3600) / 60;
+    return ([_countingSeconds intValue] % 3600) / 60;
 }
 
 - (NSInteger)hoursLeft {
-    return [_secondsLeft intValue] / 3600;
+    return [_countingSeconds intValue] / 3600;
 }
 
 @end

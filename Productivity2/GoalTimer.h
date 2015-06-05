@@ -7,13 +7,21 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Goal.h"
 
 @interface GoalTimer : NSObject
+
+//GoalTimer modes
+typedef NS_ENUM(NSInteger, timerMode){
+    GoalTimerCountDownMode,
+    GoalTimerStopWatchMode
+};
 
 //init method
 - (id)init: (NSInteger)startingSecondsLeft rounds:(NSInteger)rounds;
 
-@property (nonatomic) NSNumber *secondsLeft;
+@property (nonatomic) NSNumber *countingSeconds;
+
 @property (nonatomic) int startingSecondsLeft;
 @property (nonatomic) int startingRounds;
 @property (nonatomic) int roundsLeft;
@@ -25,6 +33,7 @@
 @property (nonatomic) int seconds;
 
 - (void)startTimer;
+- (void)startTimerWithCount:(int)seconds mode:(goalMode)mode;
 - (void)resetTimer;
 - (int)roundsLeft;
 

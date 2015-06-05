@@ -43,7 +43,13 @@
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="pa2-49-kMS" secondAttribute="bottom" constant="45" id="lTS-SJ-Qrj"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="bZo-aa-Ile"/>
+                    <navigationItem key="navigationItem" id="bZo-aa-Ile">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="KVW-Or-qBJ">
+                            <connections>
+                                <segue destination="TdZ-7M-zth" kind="show" id="5I8-UF-Xdv"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="pa2-49-kMS" id="BL9-wj-Min"/>
                     </connections>
@@ -51,6 +57,52 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="981" y="403"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="Va7-uJ-iV5">
+            <objects>
+                <viewController id="TdZ-7M-zth" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="yX7-s9-v3Y"/>
+                        <viewControllerLayoutGuide type="bottom" id="ZjY-ep-BnS"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ZAJ-fg-Roe">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Tas-Rt-N0h">
+                                <rect key="frame" x="223" y="160" width="155" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HAt-wC-0sl">
+                                <rect key="frame" x="277" y="131" width="46" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="0:00:00" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KtM-80-7qZ">
+                                <rect key="frame" x="223" y="274" width="155" height="77"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a9V-6y-UOs">
+                                <rect key="frame" x="281" y="245" width="38" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mXp-dH-1ac" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1663" y="405"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="eoK-T0-lqS">

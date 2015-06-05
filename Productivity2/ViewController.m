@@ -27,16 +27,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    self.timer = [[GoalTimer alloc]init:10 rounds:1];
+    self.timer = [[GoalTimer alloc]init];
     
 //TODO: we need to specify a context?
-    [self.timer addObserver:self forKeyPath:@"secondsLeft" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
+    [self.timer addObserver:self forKeyPath:@"countingSeconds" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
     
-    //insert a test goal
+//    insert a test goal
 //    Goal *newGoal = [NSEntityDescription insertNewObjectForEntityForName:@"Goal" inManagedObjectContext:[self managedObjectContext]];
-//    newGoal.name = @"hello";
-//    newGoal.totalTimeInSeconds = [NSNumber numberWithInt:1000];
-//        
+//    newGoal.name = @"Play Guitar";
+//    newGoal.mode = [NSNumber numberWithInt:GoalCountDownMode];
+//    newGoal.sessionTimeInSeconds = [NSNumber numberWithInt:1000];
+    
 //    if ([self.managedObjectContext hasChanges]){
 //        if (![self.managedObjectContext save: &error]) {//save failed
 //            NSLog(@"Save failed: %@", [error localizedDescription]);
@@ -44,7 +45,7 @@
 //            NSLog(@"Save succesfull");
 //        }
 //    }
-//    
+    
     NSError *error = nil;
     if (![[self fetchedResultsController] performFetch:&error]) {
         NSLog(@"Error fetching: %@", error);
@@ -74,27 +75,27 @@
 *******/
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     
-    if (object == self.timer && [keyPath isEqualToString:@"secondsLeft"]){
+    if (object == self.timer && [keyPath isEqualToString:@"countingSeconds"]){
         //grab the active cell and adjust the label
         [self updateCellTimerLabel];
         
         //get the active goal and adjust the time value
         Goal* activeGoal = [self.fetchedResultsController objectAtIndexPath:_activeGoalIndex];
        
-        activeGoal.totalTimeInSeconds = self.timer.secondsLeft;
+        activeGoal.sessionTimeInSeconds = self.timer.countingSeconds;
     }
     
 }
 
 - (void)deallocTimerObserver {
-    [self.timer removeObserver:self forKeyPath:@"secondsLeft"];
+    [self.timer removeObserver:self forKeyPath:@"countingSeconds"];
 }
 
 - (void)updateCellTimerLabel {
     
     //get the active goal from the active cell property.
     MainGoalTimerCell *cell = (MainGoalTimerCell *)[self.tableView cellForRowAtIndexPath:_activeGoalIndex];
-    cell.timeLabel.text = [NSString stringWithFormat:@"%d", [self.timer.secondsLeft intValue]];
+    cell.timeLabel.text = [NSString stringWithFormat:@"%d", [self.timer.countingSeconds intValue]];
     
 }
 
@@ -146,16 +147,17 @@
         
     } else {
         
-        //set the goal secondsLeft or seconds passed to the right amount.
+        //first store the previous session time in the previous active goal.
         Goal *activeGoal = [self.fetchedResultsController objectAtIndexPath:_activeGoalIndex];
-        activeGoal.totalTimeInSeconds = self.timer.secondsLeft;
-        
+        activeGoal.sessionTimeInSeconds = self.timer.countingSeconds;
        //append the new active goal to the active goal property
-        _activeGoalIndex = [self.tableView indexPathForCell:cell];
         
-        //initialize a new timer
-        [self.timer resetTimer];
-        //start the timer for the newly selected goal.
+        //make the newly selected goal the active goal
+        _activeGoalIndex = [self.tableView indexPathForCell:cell];
+        activeGoal = [self.fetchedResultsController objectAtIndexPath:_activeGoalIndex];
+        
+        //initialize a new timer for the goal that was clicked
+        [self.timer startTimerWithCount:[activeGoal.sessionTimeInSeconds intValue] mode:[activeGoal.mode intValue]];
     }
     
 }
@@ -164,8 +166,8 @@
     Goal *goal = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     cell.nameLabel.text = goal.name;
-    if (goal.totalTimeInSeconds) {
-        cell.timeLabel.text = [NSString stringWithFormat:@"%d", [goal.totalTimeInSeconds intValue]];
+    if (goal.sessionTimeInSeconds) {
+        cell.timeLabel.text = [NSString stringWithFormat:@"%d", [goal.sessionTimeInSeconds intValue]];
     }
     
 }
