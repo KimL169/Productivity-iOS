@@ -7,7 +7,10 @@
 //
 
 #import "ViewController.h"
+#import "Goal.h"
 
 @interface CreateGoalViewController : ViewController
+
+@property (nonatomic, strong) Goal *addGoal;
 
 @end

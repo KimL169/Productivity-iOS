@@ -31,17 +31,9 @@ int hours, minutes, seconds;
     return self;
 }
 
-- (void)resetTimer {
-    //reset the secondsLeftCounter and update the counter.
-    [self setValue:[NSNumber numberWithInt:self.startingSecondsLeft] forKey:@"countingSeconds"];
-    self.hours = self.minutes = self.seconds = 0;
-    [self.timer invalidate];
-    [self startTimer];
-}
-
 - (int)roundsLeft { return self.roundsLeft; }
 
--(void)startTimerWithCount:(int)seconds mode:(goalMode)mode{
+- (void)startTimerWithCount:(int)seconds mode:(goalMode)mode{
     
     if (!seconds) {seconds = 0;}
     self.hours = self.minutes = self.seconds = 0;

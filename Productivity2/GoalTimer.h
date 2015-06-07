@@ -32,7 +32,6 @@ typedef NS_ENUM(NSInteger, timerMode){
 @property (nonatomic) int minutes;
 @property (nonatomic) int seconds;
 
-- (void)startTimer;
 - (void)startTimerWithCount:(int)seconds mode:(goalMode)mode;
 - (void)resetTimer;
 - (int)roundsLeft;

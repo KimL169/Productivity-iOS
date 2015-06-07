@@ -10,6 +10,8 @@
 #import "MainGoalTimerCell.h"
 #import "GoalTimer.h"
 #import "Goal.h"
+#import "CreateGoalViewController.h"
+#import "NSNumber+time.h"
 
 @interface ViewController ()
 
@@ -32,32 +34,12 @@
 //TODO: we need to specify a context?
     [self.timer addObserver:self forKeyPath:@"countingSeconds" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
     
-//    insert a test goal
-//    Goal *newGoal = [NSEntityDescription insertNewObjectForEntityForName:@"Goal" inManagedObjectContext:[self managedObjectContext]];
-//    newGoal.name = @"Play Guitar";
-//    newGoal.mode = [NSNumber numberWithInt:GoalCountDownMode];
-//    newGoal.sessionTimeInSeconds = [NSNumber numberWithInt:1000];
-    
-//    if ([self.managedObjectContext hasChanges]){
-//        if (![self.managedObjectContext save: &error]) {//save failed
-//            NSLog(@"Save failed: %@", [error localizedDescription]);
-//        } else {
-//            NSLog(@"Save succesfull");
-//        }
-//    }
-    
     NSError *error = nil;
-    if (![[self fetchedResultsController] performFetch:&error]) {
-        NSLog(@"Error fetching: %@", error);
-        abort();
-    }
+    Goal *newGoal = [NSEntityDescription insertNewObjectForEntityForName:@"Goal" inManagedObjectContext:[self managedObjectContext]];
+    newGoal.name = @"Play Guitar";
+    newGoal.mode = [NSNumber numberWithInt:GoalCountDownMode];
+    newGoal.sessionTimeInSeconds = [NSNumber numberWithInt:1000];
     
-    
-}
-//TODO: save method needs to be somewhere else!
-- (void)viewDidDisappear:(BOOL)animated {
-        
-    NSError *error = nil;
     if ([self.managedObjectContext hasChanges]){
         if (![self.managedObjectContext save: &error]) {//save failed
             NSLog(@"Save failed: %@", [error localizedDescription]);
@@ -65,8 +47,12 @@
             NSLog(@"Save succesfull");
         }
     }
+    
+    if (![[self fetchedResultsController] performFetch:&error]) {
+        NSLog(@"Error fetching: %@", error);
+        abort();
+    }
 }
-
 
 #pragma mark - timer methods
 /**********
@@ -76,28 +62,21 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     
     if (object == self.timer && [keyPath isEqualToString:@"countingSeconds"]){
-        //grab the active cell and adjust the label
-        [self updateCellTimerLabel];
         
         //get the active goal and adjust the time value
         Goal* activeGoal = [self.fetchedResultsController objectAtIndexPath:_activeGoalIndex];
        
+        //update session and total time.
         activeGoal.sessionTimeInSeconds = self.timer.countingSeconds;
+        int newTotalTime = [activeGoal.totalTimeInSeconds intValue] + 1;
+        activeGoal.totalTimeInSeconds = [NSNumber numberWithInt:newTotalTime];
     }
-    
 }
 
 - (void)deallocTimerObserver {
     [self.timer removeObserver:self forKeyPath:@"countingSeconds"];
 }
 
-- (void)updateCellTimerLabel {
-    
-    //get the active goal from the active cell property.
-    MainGoalTimerCell *cell = (MainGoalTimerCell *)[self.tableView cellForRowAtIndexPath:_activeGoalIndex];
-    cell.timeLabel.text = [NSString stringWithFormat:@"%d", [self.timer.countingSeconds intValue]];
-    
-}
 
 #pragma mark - Tableview methods
 
@@ -135,22 +114,29 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    MainGoalTimerCell *cell = (MainGoalTimerCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-
     //check if a timer is running, if it is, stop the timer and save the timer data to the active goal.
     //if it's not, restart a new timer for the goal that is clicked.
-    if ([self.timer.timer isValid]) {
+    if ([self.timer.timer isValid] && indexPath == _activeGoalIndex) {
+
+        MainGoalTimerCell *cell = (MainGoalTimerCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+        cell.playPauseLabel.text = @"▶︎";
         
         //stop the timer
         [self.timer.timer invalidate];
+        //count the session time towards the time that total time.
+//TODO: if countdown it needs to finish the session in order to be counted!!
         
+    } else if ([self.timer.timer isValid] && indexPath != _activeGoalIndex){
+        
+//TODO: notifiy user that he cannot press the tableview because another is busy..
     } else {
+        
+        MainGoalTimerCell *cell = (MainGoalTimerCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+        cell.playPauseLabel.text = @"◼︎";
         
         //first store the previous session time in the previous active goal.
         Goal *activeGoal = [self.fetchedResultsController objectAtIndexPath:_activeGoalIndex];
         activeGoal.sessionTimeInSeconds = self.timer.countingSeconds;
-       //append the new active goal to the active goal property
         
         //make the newly selected goal the active goal
         _activeGoalIndex = [self.tableView indexPathForCell:cell];
@@ -167,9 +153,40 @@
     
     cell.nameLabel.text = goal.name;
     if (goal.sessionTimeInSeconds) {
-        cell.timeLabel.text = [NSString stringWithFormat:@"%d", [goal.sessionTimeInSeconds intValue]];
+        cell.timeLabel.text = [NSString stringWithFormat:@"%.2d:%.2d:%.2d", [goal.sessionTimeInSeconds hours], [goal.sessionTimeInSeconds minutesMinusHours], [goal.sessionTimeInSeconds secondsMinusMinutesMinutesHours]];
+    }
+    cell.totalTimeLabel.text = [NSString stringWithFormat:@"%dh %dm", [goal.totalTimeInSeconds hours], [goal.totalTimeInSeconds minutesMinusHours]];
+    
+    
+    if (indexPath == _activeGoalIndex && [self.timer.timer isValid]) {
+        cell.playPauseLabel.text = @"◼︎";
+    } else {
+        cell.playPauseLabel.text = @"▶︎";
     }
     
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        NSManagedObjectContext *context = [self managedObjectContext];
+        Goal *goalToDelete = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        [context deleteObject:goalToDelete];
+
+//TODO: moet dit hier wel?
+#warning deze save zit hier verkeerd? download de XTDO plugin voor xcode om //TODO messages in warnings te veranderen.
+        NSError *error = nil;
+        if (![context save:&error]) {
+            NSLog(@"Error saving delete %@", error);
+        }
+    }
+}
+-(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+-(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewCellEditingStyleDelete;
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate
@@ -285,6 +302,20 @@
     _fetchedResultsController.delegate = self;
     
     return _fetchedResultsController;
+}
+
+#pragma mark - segue
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    //segue to the viewcontroller for adding goals.
+    if ([[segue identifier] isEqualToString:@"addGoal"]) {
+        
+        UINavigationController *navigationController = segue.destinationViewController;
+        CreateGoalViewController *vc = (CreateGoalViewController *)navigationController.topViewController;
+        Goal *addGoal = [NSEntityDescription insertNewObjectForEntityForName:@"Goal" inManagedObjectContext:[self managedObjectContext]];
+        vc.addGoal = addGoal;
+    }
 }
 
 @end
