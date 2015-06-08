@@ -7,18 +7,16 @@
 //
 
 #import "ViewController.h"
-#import "MainGoalTimerCell.h"
 #import "GoalTimer.h"
 #import "Goal.h"
 #import "CreateGoalViewController.h"
 #import "NSNumber+time.h"
+#import "MainGoalTimerCell.h"
 
 @interface ViewController ()
 
 @property (nonatomic, strong) GoalTimer *timer;
 @property (nonatomic, strong) NSIndexPath *activeGoalIndex;
-@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
-@property (nonatomic, strong) NSManagedObjectContext *context;
 
 #define CELL_HEIGHT 120
 
@@ -34,8 +32,7 @@
 //TODO: we need to specify a context?
     [self.timer addObserver:self forKeyPath:@"countingSeconds" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
     
-    NSError *error = nil;
-    Goal *newGoal = [NSEntityDescription insertNewObjectForEntityForName:@"Goal" inManagedObjectContext:[self managedObjectContext]];
+    Goal *newGoal = [NSEntityDescription insertNewObjectForEntityForName:@"Goal" inManagedObjectContext:[super managedObjectContext]];
     newGoal.name = @"Workout";
     newGoal.mode = [NSNumber numberWithInt:GoalStopWatchMode];
     newGoal.rounds = [NSNumber numberWithInt:0];
@@ -43,18 +40,8 @@
     newGoal.plannedSessionTime = [NSNumber numberWithInt:0];
     newGoal.sessionTimeInSeconds = [NSNumber numberWithInt:0];
     
-    if ([self.managedObjectContext hasChanges]){
-        if (![self.managedObjectContext save: &error]) {//save failed
-            NSLog(@"Save failed: %@", [error localizedDescription]);
-        } else {
-            NSLog(@"Save succesfull");
-        }
-    }
-    
-    if (![[self fetchedResultsController] performFetch:&error]) {
-        NSLog(@"Error fetching: %@", error);
-        abort();
-    }
+    [self saveManagedObjectContext];
+    [self performFetch];
 }
 
 #pragma mark - timer methods
@@ -92,34 +79,7 @@
 
 #pragma mark - Tableview methodscontext	void *	NULL	0x0000000000000000
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
-    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections]objectAtIndex:section];
-    // Return the number of rows in the section.
-    return [sectionInfo numberOfObjects];
-}
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    
-    //return the number of sections in both the bodystat and diet plan fetchedresultscontroller.
-    return [[self.fetchedResultsController sections]count];
-}
-
-
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    static NSString *cellIdentifier = @"timerCell";
-    
-    MainGoalTimerCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    
-    if (cell == nil) {
-        NSArray *nib = [[NSBundle mainBundle]loadNibNamed:@"MainGoalTimerCell" owner:self options:nil];
-        cell = [nib objectAtIndex:0];
-    }
-    
-    return cell;
-}
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return CELL_HEIGHT;
@@ -204,7 +164,7 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        NSManagedObjectContext *context = [self managedObjectContext];
+        NSManagedObjectContext *context = [super managedObjectContext];
         Goal *goalToDelete = [self.fetchedResultsController objectAtIndexPath:indexPath];
         [context deleteObject:goalToDelete];
 
@@ -224,120 +184,7 @@
     return UITableViewCellEditingStyleDelete;
 }
 
-#pragma mark - NSFetchedResultsControllerDelegate
 
-- (NSManagedObjectContext *)managedObjectContext {
-    return  [(AppDelegate *)[[UIApplication sharedApplication]delegate]managedObjectContext];
-    
-}
-
-- (NSArray *)performFetchWithEntityName:(NSString *)entityName
-                              predicate:(NSPredicate *)predicate
-                         sortDescriptor:(NSSortDescriptor *)sortDescriptor {
-    
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:entityName inManagedObjectContext:self.managedObjectContext];
-    [fetchRequest setEntity:entity];
-    // Specify criteria for filtering which objects to fetch
-    [fetchRequest setPredicate:predicate];
-    // Specify how the fetched objects should be sorted
-    [fetchRequest setSortDescriptors:[NSArray arrayWithObjects:sortDescriptor, nil]];
-    
-    NSError *error = nil;
-    NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (fetchedObjects == nil) {
-        NSLog(@"error fetching: %@", error);
-    }
-    
-    return fetchedObjects;
-}
-
-- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
-{
-    [self.tableView beginUpdates];
-}
-
-//if changes to a section occured.
-- (void)controller:(NSFetchedResultsController *)controller
-  didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
-		   atIndex:(NSUInteger)sectionIndex
-	 forChangeType:(NSFetchedResultsChangeType)type
-{
-    switch(type)
-    {
-        case NSFetchedResultsChangeInsert:
-            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-            
-        case NSFetchedResultsChangeDelete:
-            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-    }
-}
-
-//if changes to an object occured.
-- (void)controller:(NSFetchedResultsController *)controller
-   didChangeObject:(id)anObject
-	   atIndexPath:(NSIndexPath *)indexPath
-	 forChangeType:(NSFetchedResultsChangeType)type
-	  newIndexPath:(NSIndexPath *)newIndexPath
-{
-    
-    // responses for type (insert, delete, update, move).
-    switch(type)
-    {
-        case NSFetchedResultsChangeInsert:
-            [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-            
-        case NSFetchedResultsChangeDelete:
-            [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-            
-        case NSFetchedResultsChangeUpdate:
-            [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-            
-        case NSFetchedResultsChangeMove:
-            [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-    }
-}
-
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
-{
-    [self.tableView endUpdates];
-}
-
-- (NSFetchedResultsController *)fetchedResultsController {
-    if (_fetchedResultsController != nil) {
-        return _fetchedResultsController;
-    }
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]init];
-    
-    _context = [self managedObjectContext];
-    
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Goal" inManagedObjectContext:_context];
-    
-    //set the fetch request to the Patient entity
-    [fetchRequest setEntity:entity];
-    
-    //sort on patients last name, ascending;
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc]initWithKey:@"name" ascending:YES];
-    
-    //make an array of the descriptor because the fetchrequest argument takes an array.
-    NSArray *sortDescriptors = [[NSArray alloc]initWithObjects:sortDescriptor, nil];
-    
-    //now assign the sort descriptors to the fetchrequest.
-    fetchRequest.sortDescriptors = sortDescriptors;
-    
-    _fetchedResultsController = [[NSFetchedResultsController alloc]initWithFetchRequest:fetchRequest managedObjectContext:_context sectionNameKeyPath:nil cacheName:nil];
-    
-    _fetchedResultsController.delegate = self;
-    
-    return _fetchedResultsController;
-}
 
 #pragma mark - segue
 

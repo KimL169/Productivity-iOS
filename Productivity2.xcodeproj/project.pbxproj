@@ -18,6 +18,7 @@
 		3B2DEEA41ACE67050065F39D /* MainGoalTimerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B2DEEA31ACE67050065F39D /* MainGoalTimerCell.xib */; };
 		3B2DEEA71ACE67550065F39D /* MainGoalTimerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B2DEEA61ACE67550065F39D /* MainGoalTimerCell.m */; };
 		3B2DEEAA1ACED47C0065F39D /* GoalTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B2DEEA91ACED47C0065F39D /* GoalTimer.m */; };
+		3B533F701B25E770001D03F8 /* CoreDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B533F6F1B25E770001D03F8 /* CoreDataViewController.m */; };
 		3B75078C1B20539400D0054C /* CreateGoalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B75078B1B20539400D0054C /* CreateGoalViewController.m */; };
 		3BE8E10A1B235C1500B0F677 /* NSNumber+time.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BE8E1091B235C1500B0F677 /* NSNumber+time.m */; };
 		3BE8E1101B242A2400B0F677 /* Goal.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BE8E10F1B242A2400B0F677 /* Goal.m */; };
@@ -53,6 +54,8 @@
 		3B2DEEA61ACE67550065F39D /* MainGoalTimerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainGoalTimerCell.m; path = ../MainGoalTimerCell.m; sourceTree = "<group>"; };
 		3B2DEEA81ACED47C0065F39D /* GoalTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoalTimer.h; sourceTree = "<group>"; };
 		3B2DEEA91ACED47C0065F39D /* GoalTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoalTimer.m; sourceTree = "<group>"; };
+		3B533F6E1B25E770001D03F8 /* CoreDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataViewController.h; sourceTree = "<group>"; };
+		3B533F6F1B25E770001D03F8 /* CoreDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataViewController.m; sourceTree = "<group>"; };
 		3B75078A1B20539400D0054C /* CreateGoalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateGoalViewController.h; sourceTree = "<group>"; };
 		3B75078B1B20539400D0054C /* CreateGoalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateGoalViewController.m; sourceTree = "<group>"; };
 		3BE8E1081B235C1500B0F677 /* NSNumber+time.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+time.h"; sourceTree = "<group>"; };
@@ -158,6 +161,8 @@
 				3B75078B1B20539400D0054C /* CreateGoalViewController.m */,
 				3B2DEE7F1ACE64C30065F39D /* ViewController.h */,
 				3B2DEE801ACE64C30065F39D /* ViewController.m */,
+				3B533F6E1B25E770001D03F8 /* CoreDataViewController.h */,
+				3B533F6F1B25E770001D03F8 /* CoreDataViewController.m */,
 				3B2DEE821ACE64C30065F39D /* Main.storyboard */,
 				3B2DEEA31ACE67050065F39D /* MainGoalTimerCell.xib */,
 				3B2DEEA51ACE67550065F39D /* MainGoalTimerCell.h */,
@@ -270,6 +275,7 @@
 				3BE8E1101B242A2400B0F677 /* Goal.m in Sources */,
 				3B2DEE7B1ACE64C30065F39D /* AppDelegate.m in Sources */,
 				3B2DEEAA1ACED47C0065F39D /* GoalTimer.m in Sources */,
+				3B533F701B25E770001D03F8 /* CoreDataViewController.m in Sources */,
 				3B75078C1B20539400D0054C /* CreateGoalViewController.m in Sources */,
 				3BE8E10A1B235C1500B0F677 /* NSNumber+time.m in Sources */,
 				3B2DEE781ACE64C30065F39D /* main.m in Sources */,
