@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 #import "AppDelegate.h"
+#import "Goal.h"
+#import "Session.h"
 
 @interface CoreDataViewController : UIViewController <NSFetchedResultsControllerDelegate, UITableViewDelegate, UITableViewDataSource>
 
@@ -19,5 +21,8 @@
 - (NSManagedObjectContext *)managedObjectContext;
 - (void)saveManagedObjectContext;
 - (void)performFetch;
+
+- (Session *)fetchCurrentSessionForGoal:(Goal *)goal;
+- (NSArray *)fetchAllSessionsForGoal:(Goal *)goal;
 
 @end

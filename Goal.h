@@ -21,6 +21,13 @@
 @property (nonatomic, retain) NSNumber * plannedSessionTime;
 @property (nonatomic, retain) NSNumber * totalTimeInSeconds;
 @property (nonatomic, retain) NSSet *sessions;
+
+typedef NS_ENUM(NSUInteger, goalMode){
+    GoalTaskMode,
+    GoalStopWatchMode,
+    GoalCountDownMode
+};
+
 @end
 
 @interface Goal (CoreDataGeneratedAccessors)

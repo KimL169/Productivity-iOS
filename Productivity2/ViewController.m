@@ -35,10 +35,8 @@
     Goal *newGoal = [NSEntityDescription insertNewObjectForEntityForName:@"Goal" inManagedObjectContext:[super managedObjectContext]];
     newGoal.name = @"Workout";
     newGoal.mode = [NSNumber numberWithInt:GoalStopWatchMode];
-    newGoal.rounds = [NSNumber numberWithInt:0];
     newGoal.plannedRounds = [NSNumber numberWithInt:5];
     newGoal.plannedSessionTime = [NSNumber numberWithInt:0];
-    newGoal.sessionTimeInSeconds = [NSNumber numberWithInt:0];
     
     [self saveManagedObjectContext];
     [self performFetch];
