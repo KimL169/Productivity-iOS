@@ -167,13 +167,8 @@
         NSManagedObjectContext *context = [super managedObjectContext];
         Goal *goalToDelete = [self.fetchedResultsController objectAtIndexPath:indexPath];
         [context deleteObject:goalToDelete];
-
-//TODO: moet dit hier wel?
-#warning deze save zit hier verkeerd? download de XTDO plugin voor xcode om //TODO messages in warnings te veranderen.
-        NSError *error = nil;
-        if (![context save:&error]) {
-            NSLog(@"Error saving delete %@", error);
-        }
+        
+        [self saveManagedObjectContext];
     }
 }
 -(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
