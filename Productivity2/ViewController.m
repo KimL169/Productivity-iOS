@@ -1,4 +1,5 @@
 //
+//
 //  ViewController.m
 //  Productivity2
 //
@@ -37,6 +38,10 @@
     newGoal.mode = [NSNumber numberWithInt:GoalStopWatchMode];
     newGoal.plannedRounds = [NSNumber numberWithInt:5];
     newGoal.plannedSessionTime = [NSNumber numberWithInt:0];
+    //make a new session for the goal.
+    Session *newSession = [NSEntityDescription insertNewObjectForEntityForName:@"Session" inManagedObjectContext:[super managedObjectContext]];
+    newSession.date = [NSDate date];
+    [newGoal setSessions:[NSSet setWithObject:newSession]];
     
     [self saveManagedObjectContext];
     [self performFetch];
@@ -53,14 +58,16 @@
         
         //get the active goal and adjust the time value
         Goal* activeGoal = [self.fetchedResultsController objectAtIndexPath:_activeGoalIndex];
+        //get the current session for the goal
+        Session *currentSessionForActiveGoal = [self fetchCurrentSessionForGoal:activeGoal];
        
         //update session and total time.
-        activeGoal.sessionTimeInSeconds = self.timer.countingSeconds;
+        currentSessionForActiveGoal.sessionTimeInSeconds = self.timer.countingSeconds;
         
         //if it's a countdownTimer update the rounds
         if ([activeGoal.mode intValue] == GoalCountDownMode && [self.timer.countingSeconds intValue]== 0) {
-            activeGoal.rounds = [NSNumber numberWithInt:[activeGoal.rounds intValue] + 1];
-            activeGoal.sessionTimeInSeconds = activeGoal.plannedSessionTime;
+            currentSessionForActiveGoal.rounds = [NSNumber numberWithInt:[currentSessionForActiveGoal.rounds intValue] + 1];
+            currentSessionForActiveGoal.sessionTimeInSeconds = activeGoal.plannedSessionTime;
             
             [self.timer.timer invalidate];
         }
@@ -108,11 +115,13 @@
     //make the newly selected goal the active goal
     _activeGoalIndex = [self.tableView indexPathForCell:cell];
     Goal *activeGoal = [self.fetchedResultsController objectAtIndexPath:_activeGoalIndex];
+    //get the current session for the acitve goal
+    Session *currentSessionForActiveGoal = [self fetchCurrentSessionForGoal:activeGoal];
     
     switch ([activeGoal.mode intValue]) {
         case GoalCountDownMode:
-            if (activeGoal.sessionTimeInSeconds == 0) {
-                activeGoal.sessionTimeInSeconds = activeGoal.plannedSessionTime;
+            if (currentSessionForActiveGoal.sessionTimeInSeconds == 0) {
+                currentSessionForActiveGoal.sessionTimeInSeconds = activeGoal.plannedSessionTime;
             }
             break;
         case GoalStopWatchMode:
@@ -123,7 +132,7 @@
     }
     
     //initialize a new timer for the goal that was clicked
-    [self.timer startTimerWithCount:[activeGoal.sessionTimeInSeconds intValue] mode:[activeGoal.mode intValue]];
+    [self.timer startTimerWithCount:[currentSessionForActiveGoal.sessionTimeInSeconds intValue] mode:[activeGoal.mode intValue]];
 }
 
 - (void)stopTimerForIndexPath:(NSIndexPath *)indexPath {
@@ -138,14 +147,15 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(MainGoalTimerCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     Goal *goal = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    Session *currentSessionForActiveGoal = [self fetchCurrentSessionForGoal:goal];
     
     cell.nameLabel.text = goal.name;
-    if (goal.sessionTimeInSeconds) {
-        cell.timeLabel.text = [NSString stringWithFormat:@"%.2d:%.2d:%.2d", [goal.sessionTimeInSeconds hours], [goal.sessionTimeInSeconds minutesMinusHours], [goal.sessionTimeInSeconds secondsMinusMinutesMinutesHours]];
+    if (currentSessionForActiveGoal.sessionTimeInSeconds) {
+        cell.timeLabel.text = [NSString stringWithFormat:@"%.2d:%.2d:%.2d", [currentSessionForActiveGoal.sessionTimeInSeconds hours], [currentSessionForActiveGoal.sessionTimeInSeconds minutesMinusHours], [currentSessionForActiveGoal.sessionTimeInSeconds secondsMinusMinutesMinutesHours]];
     }
     
     if ([goal.mode intValue] == GoalCountDownMode) {
-        cell.roundsLabel.text = [NSString stringWithFormat:@"%d / %d",[goal.rounds intValue], [goal.plannedRounds intValue]];
+        cell.roundsLabel.text = [NSString stringWithFormat:@"%d / %d",[currentSessionForActiveGoal.rounds intValue], [goal.plannedRounds intValue]];
     } else {
         cell.roundsLabel.text = @"";
     }
