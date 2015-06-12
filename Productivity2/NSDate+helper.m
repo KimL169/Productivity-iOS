@@ -22,4 +22,15 @@
     return [components day];
 }
 
++ (NSDate *)setDateToMidnight: (NSDate*)date {
+    
+    //set the date to midnight, can be used so that the times of dates are all alike.
+    //makes day comparisons easier.
+    NSCalendar *calendar = [NSCalendar autoupdatingCurrentCalendar];
+    NSUInteger preservedComponents = (NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit);
+    NSDate *returnDate = [calendar dateFromComponents:[calendar components:preservedComponents fromDate:date]];
+    
+    return returnDate;
+}
+
 @end

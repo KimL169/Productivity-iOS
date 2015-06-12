@@ -30,20 +30,19 @@
     // Do any additional setup after loading the view, typically from a nib.
     self.timer = [[GoalTimer alloc]init];
     
-//TODO: we need to specify a context?
-    [self.timer addObserver:self forKeyPath:@"countingSeconds" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
+//    [self.timer addObserver:self forKeyPath:@"countingSeconds" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
+//    
+//    Goal *newGoal = [NSEntityDescription insertNewObjectForEntityForName:@"Goal" inManagedObjectContext:[super managedObjectContext]];
+//    newGoal.name = @"Workout";
+//    newGoal.mode = [NSNumber numberWithInt:GoalStopWatchMode];
+//    newGoal.plannedRounds = [NSNumber numberWithInt:5];
+//    newGoal.plannedSessionTime = [NSNumber numberWithInt:0];
+//    //make a new session for the goal.
+//    Session *newSession = [NSEntityDescription insertNewObjectForEntityForName:@"Session" inManagedObjectContext:[super managedObjectContext]];
+//    newSession.date = [NSDate date];
+//    [newGoal setSessions:[NSSet setWithObject:newSession]];
+//    [self saveManagedObjectContext];
     
-    Goal *newGoal = [NSEntityDescription insertNewObjectForEntityForName:@"Goal" inManagedObjectContext:[super managedObjectContext]];
-    newGoal.name = @"Workout";
-    newGoal.mode = [NSNumber numberWithInt:GoalStopWatchMode];
-    newGoal.plannedRounds = [NSNumber numberWithInt:5];
-    newGoal.plannedSessionTime = [NSNumber numberWithInt:0];
-    //make a new session for the goal.
-    Session *newSession = [NSEntityDescription insertNewObjectForEntityForName:@"Session" inManagedObjectContext:[super managedObjectContext]];
-    newSession.date = [NSDate date];
-    [newGoal setSessions:[NSSet setWithObject:newSession]];
-    
-    [self saveManagedObjectContext];
     [self performFetch];
 }
 
@@ -82,7 +81,7 @@
 }
 
 
-#pragma mark - Tableview methodscontext	void *	NULL	0x0000000000000000
+#pragma mark - Tableview methodscontext	
 
 
 
@@ -94,14 +93,11 @@
     //check if a timer is running, if it is, stop the timer and save the timer data to the active goal.
     //if it's not, restart a new timer for the goal that is clicked.
     if ([self.timer.timer isValid] && indexPath == _activeGoalIndex) {
-        
         [self stopTimerForIndexPath:indexPath];
-        
     } else if ([self.timer.timer isValid] && indexPath != _activeGoalIndex){
         
 //TODO: notifiy user that he cannot press the tableview because another is busy..
     } else {
-        
         //start a new timer
         [self startNewGoalTimerForIndexPath:indexPath];
     }

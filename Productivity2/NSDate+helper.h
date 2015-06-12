@@ -12,4 +12,6 @@
 
 + (NSInteger)daysBetweenDate:(NSDate*)fromDateTime andDate:(NSDate*)toDateTime;
 
++ (NSDate *)setDateToMidnight: (NSDate*)date;
+
 @end

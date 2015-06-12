@@ -9,12 +9,12 @@
 #import "Session.h"
 #import "Goal.h"
 
-
 @implementation Session
 
 @dynamic sessionTimeInSeconds;
 @dynamic rounds;
 @dynamic date;
 @dynamic goal;
+
 
 @end

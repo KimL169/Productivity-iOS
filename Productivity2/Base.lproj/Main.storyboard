@@ -123,7 +123,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="amQ-1G-MOL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="179" y="797"/>
+            <point key="canvasLocation" x="231" y="403"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Y6c-JQ-xoB">

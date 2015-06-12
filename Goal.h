@@ -37,4 +37,7 @@ typedef NS_ENUM(NSUInteger, goalMode){
 - (void)addSessions:(NSSet *)values;
 - (void)removeSessions:(NSSet *)values;
 
+- (Session *)fetchCurrentSessionForGoal:(Goal *)goal;
+- (Session *)returnCurrentOrNewSession;
+
 @end
