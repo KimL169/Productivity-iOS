@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import "Goal.h"
 
-@interface CreateGoalViewController : ViewController
+@interface CreateGoalViewController : CoreDataViewController
 
 @property (nonatomic, strong) Goal *addGoal;
 
