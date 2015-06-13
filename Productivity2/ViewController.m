@@ -35,9 +35,10 @@
 //
     Goal *newGoal = [NSEntityDescription insertNewObjectForEntityForName:@"Goal" inManagedObjectContext:[super managedObjectContext]];
     newGoal.name = @"Workout";
-    newGoal.mode = [NSNumber numberWithInt:GoalStopWatchMode];
+    newGoal.mode = [NSNumber numberWithInt:GoalCountDownMode];
     newGoal.plannedRounds = [NSNumber numberWithInt:5];
     newGoal.plannedSessionTime = [NSNumber numberWithInt:0];
+    newGoal.totalTimeInSeconds = [NSNumber numberWithInt:0];
     //make a new session for the goal.
     Session *newSession = [NSEntityDescription insertNewObjectForEntityForName:@"Session" inManagedObjectContext:[super managedObjectContext]];
     newSession.date = [NSDate date];
@@ -59,6 +60,7 @@
         
         //get the active goal and adjust the time value
         Goal* activeGoal = [self.fetchedResultsController objectAtIndexPath:_activeGoalIndex];
+        
         //get the current session for the goal
         Session *currentSessionForActiveGoal = [activeGoal fetchCurrentSessionForGoal];
        
@@ -73,8 +75,11 @@
             [self.timer.timer invalidate];
         }
         
-        int newTotalTime = [activeGoal.totalTimeInSeconds intValue] + 1;
-        activeGoal.totalTimeInSeconds = [NSNumber numberWithInt:newTotalTime];
+        if ([self.timer.countingSeconds intValue] > 0) {
+            int newTotalTime = [activeGoal.totalTimeInSeconds intValue] + 1;
+            NSLog(@"newTotalTime:%d", newTotalTime);
+            activeGoal.totalTimeInSeconds = [NSNumber numberWithInt:newTotalTime];
+        }
     }
 }
 
