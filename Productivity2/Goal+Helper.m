@@ -27,6 +27,19 @@
     
     Session *newSession = [NSEntityDescription insertNewObjectForEntityForName:@"Session" inManagedObjectContext:[super managedObjectContext]];
     newSession.date = [NSDate setDateToMidnight:[NSDate date]];
+    newSession.goal = self;
+    
+    //check if the goal is countdown or not adjust the session.
+    switch ([self.mode intValue]) {
+        case GoalCountDownMode:
+            newSession.sessionTimeInSeconds = self.plannedSessionTime;
+            break;
+        case GoalStopWatchMode:
+            //TODO
+            break;
+        default:
+            break;
+    }
     
     return newSession;
 }

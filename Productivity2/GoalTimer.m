@@ -8,6 +8,10 @@
 
 #import "GoalTimer.h"
 
+@interface GoalTimer()
+@property (nonatomic) goalMode mode;
+@end
+
 @implementation GoalTimer
 
 
@@ -34,41 +38,29 @@ int hours, minutes, seconds;
 - (int)roundsLeft { return self.roundsLeft; }
 
 - (void)startTimerWithCount:(int)seconds mode:(goalMode)mode{
+    _mode = mode;
     
     if (!seconds) {seconds = 0;}
     self.hours = self.minutes = self.seconds = 0;
-   
-    switch (mode) {
-        case GoalStopWatchMode:
-            self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(stopWatchTimerUpdate) userInfo:nil repeats:YES];
-            self.countingSeconds = [NSNumber numberWithInt:seconds];
-            break;
-        case GoalCountDownMode:
-            self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countDownTimerUpdate) userInfo:nil repeats:YES];
-            self.countingSeconds = [NSNumber numberWithInt:seconds];
-            break;
-        default:
-            self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(stopWatchTimerUpdate) userInfo:nil repeats:YES];
-            self.countingSeconds = [NSNumber numberWithInt:seconds];
-            break;
-    }
+    self.countingSeconds = [NSNumber numberWithInt:seconds];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerUpdate) userInfo:nil repeats:YES];
+    
    [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
 }
 
-
-- (void)countDownTimerUpdate {
-//TODO: is this right?
-    int secondsLeft = [self.countingSeconds intValue];
-    if ([self.countingSeconds integerValue]> 0) {
-        secondsLeft--;
-        [self setValue:[NSNumber numberWithInt:secondsLeft] forKey:@"countingSeconds"];
+- (void)timerUpdate {
+    
+    int count = [self.countingSeconds intValue];
+    switch (_mode) {
+        case GoalStopWatchMode:
+            [self setValue:[NSNumber numberWithInt:++count] forKey:@"countingSeconds"];
+            break;
+        case GoalCountDownMode:
+            [self setValue:[NSNumber numberWithInt:--count] forKey:@"countingSeconds"];
+            break;
+        default:
+            break;
     }
-}
-
-- (void)stopWatchTimerUpdate {
-    int count = [[self valueForKey:@"countingSeconds"] intValue];
-    [self setValue:[NSNumber numberWithInt:++count] forKey:@"countingSeconds"];
-    NSLog(@"count: %d", count);
 }
 
 - (NSInteger)minutesLeft {

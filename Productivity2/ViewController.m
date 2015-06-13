@@ -31,22 +31,34 @@
     // Do any additional setup after loading the view, typically from a nib.
     self.timer = [[GoalTimer alloc]init];
     
-    [self.timer addObserver:self forKeyPath:@"countingSeconds" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
 //
     Goal *newGoal = [NSEntityDescription insertNewObjectForEntityForName:@"Goal" inManagedObjectContext:[super managedObjectContext]];
     newGoal.name = @"Workout";
     newGoal.mode = [NSNumber numberWithInt:GoalCountDownMode];
     newGoal.plannedRounds = [NSNumber numberWithInt:5];
-    newGoal.plannedSessionTime = [NSNumber numberWithInt:0];
+    newGoal.plannedSessionTime = [NSNumber numberWithInt:10];
     newGoal.totalTimeInSeconds = [NSNumber numberWithInt:0];
+    
     //make a new session for the goal.
-    Session *newSession = [NSEntityDescription insertNewObjectForEntityForName:@"Session" inManagedObjectContext:[super managedObjectContext]];
-    newSession.date = [NSDate date];
-    [newSession setGoal:newGoal];
+    [newGoal returnCurrentOrNewSession];
     
     [self saveManagedObjectContext];
     
     [self performFetch];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    //add the observer for timer
+    [self.timer addObserver:self forKeyPath:@"countingSeconds" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    
+    //remove the observer
+    [self.timer removeObserver:self forKeyPath:@"countingSeconds"];
 }
 
 #pragma mark - timer methods
@@ -81,11 +93,9 @@
             activeGoal.totalTimeInSeconds = [NSNumber numberWithInt:newTotalTime];
         }
     }
+    
 }
 
-- (void)deallocTimerObserver {
-    [self.timer removeObserver:self forKeyPath:@"countingSeconds"];
-}
 
 
 #pragma mark - Tableview methodscontext	
@@ -147,13 +157,12 @@
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(MainGoalTimerCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     Goal *goal = [self.fetchedResultsController objectAtIndexPath:indexPath];
     Session *currentSessionForActiveGoal = [goal fetchCurrentSessionForGoal];
     
     cell.nameLabel.text = goal.name;
-    if (currentSessionForActiveGoal.sessionTimeInSeconds) {
-        cell.timeLabel.text = [NSString stringWithFormat:@"%.2d:%.2d:%.2d", [currentSessionForActiveGoal.sessionTimeInSeconds hours], [currentSessionForActiveGoal.sessionTimeInSeconds minutesMinusHours], [currentSessionForActiveGoal.sessionTimeInSeconds secondsMinusMinutesMinutesHours]];
-    }
+    cell.timeLabel.text = [NSString stringWithFormat:@"%.2d:%.2d:%.2d", [currentSessionForActiveGoal.sessionTimeInSeconds hours], [currentSessionForActiveGoal.sessionTimeInSeconds minutesMinusHours], [currentSessionForActiveGoal.sessionTimeInSeconds secondsMinusMinutesMinutesHours]];
     
     if ([goal.mode intValue] == GoalCountDownMode) {
         cell.roundsLabel.text = [NSString stringWithFormat:@"%d / %d",[currentSessionForActiveGoal.rounds intValue], [goal.plannedRounds intValue]];
