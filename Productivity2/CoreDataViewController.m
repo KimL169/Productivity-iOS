@@ -31,29 +31,14 @@
     }
 }
 
-- (Session *)fetchCurrentSessionForGoal:(Goal *)goal {
-    return [[self fetchAllSessionsForGoal:goal] lastObject];
-}
-
-- (NSArray *)fetchAllSessionsForGoal:(Goal *)goal {
-    
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Session" inManagedObjectContext:[self managedObjectContext]];
-    [fetchRequest setEntity:entity];
-    
-    // Specify how the fetched objects should be sorted
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"date"
-    ascending:YES];
-    
-    [fetchRequest setSortDescriptors:[NSArray arrayWithObjects:sortDescriptor, nil]];
-
-    NSError *error = nil;
-    NSArray *fetchedObjects = [[self managedObjectContext] executeFetchRequest:fetchRequest error:&error];
-    if (fetchedObjects == nil) {
-        NSLog(@"no fetched objects %@", [error localizedDescription]);
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        Goal *goalToDelete = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        
+        [[self managedObjectContext] deleteObject:goalToDelete];
+       
+//TODO: Update the goal number of the other goals. For reference, see gymregime DietPlanDaysTableViewController
     }
-    
-    return fetchedObjects;
 }
 
 #pragma mark - tableview methods

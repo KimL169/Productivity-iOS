@@ -12,6 +12,7 @@
 #import "Goal.h"
 #import "CreateGoalViewController.h"
 #import "NSNumber+time.h"
+#import "Goal+Helper.h" 
 #import "MainGoalTimerCell.h"
 
 @interface ViewController ()
@@ -30,18 +31,19 @@
     // Do any additional setup after loading the view, typically from a nib.
     self.timer = [[GoalTimer alloc]init];
     
-//    [self.timer addObserver:self forKeyPath:@"countingSeconds" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
-//    
-//    Goal *newGoal = [NSEntityDescription insertNewObjectForEntityForName:@"Goal" inManagedObjectContext:[super managedObjectContext]];
-//    newGoal.name = @"Workout";
-//    newGoal.mode = [NSNumber numberWithInt:GoalStopWatchMode];
-//    newGoal.plannedRounds = [NSNumber numberWithInt:5];
-//    newGoal.plannedSessionTime = [NSNumber numberWithInt:0];
-//    //make a new session for the goal.
-//    Session *newSession = [NSEntityDescription insertNewObjectForEntityForName:@"Session" inManagedObjectContext:[super managedObjectContext]];
-//    newSession.date = [NSDate date];
-//    [newGoal setSessions:[NSSet setWithObject:newSession]];
-//    [self saveManagedObjectContext];
+    [self.timer addObserver:self forKeyPath:@"countingSeconds" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
+//
+    Goal *newGoal = [NSEntityDescription insertNewObjectForEntityForName:@"Goal" inManagedObjectContext:[super managedObjectContext]];
+    newGoal.name = @"Workout";
+    newGoal.mode = [NSNumber numberWithInt:GoalStopWatchMode];
+    newGoal.plannedRounds = [NSNumber numberWithInt:5];
+    newGoal.plannedSessionTime = [NSNumber numberWithInt:0];
+    //make a new session for the goal.
+    Session *newSession = [NSEntityDescription insertNewObjectForEntityForName:@"Session" inManagedObjectContext:[super managedObjectContext]];
+    newSession.date = [NSDate date];
+    [newSession setGoal:newGoal];
+    
+    [self saveManagedObjectContext];
     
     [self performFetch];
 }
@@ -58,7 +60,7 @@
         //get the active goal and adjust the time value
         Goal* activeGoal = [self.fetchedResultsController objectAtIndexPath:_activeGoalIndex];
         //get the current session for the goal
-        Session *currentSessionForActiveGoal = [self fetchCurrentSessionForGoal:activeGoal];
+        Session *currentSessionForActiveGoal = [activeGoal fetchCurrentSessionForGoal];
        
         //update session and total time.
         currentSessionForActiveGoal.sessionTimeInSeconds = self.timer.countingSeconds;
@@ -83,8 +85,6 @@
 
 #pragma mark - Tableview methodscontext	
 
-
-
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return CELL_HEIGHT;
 }
@@ -106,13 +106,13 @@
 - (void)startNewGoalTimerForIndexPath:(NSIndexPath*)indexPath {
     
     MainGoalTimerCell *cell = (MainGoalTimerCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    _activeGoalIndex = indexPath;
     cell.playPauseLabel.text = @"◼︎";
     
     //make the newly selected goal the active goal
-    _activeGoalIndex = [self.tableView indexPathForCell:cell];
     Goal *activeGoal = [self.fetchedResultsController objectAtIndexPath:_activeGoalIndex];
     //get the current session for the acitve goal
-    Session *currentSessionForActiveGoal = [self fetchCurrentSessionForGoal:activeGoal];
+    Session *currentSessionForActiveGoal = [activeGoal fetchCurrentSessionForGoal];
     
     switch ([activeGoal.mode intValue]) {
         case GoalCountDownMode:
@@ -143,7 +143,7 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(MainGoalTimerCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     Goal *goal = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    Session *currentSessionForActiveGoal = [self fetchCurrentSessionForGoal:goal];
+    Session *currentSessionForActiveGoal = [goal fetchCurrentSessionForGoal];
     
     cell.nameLabel.text = goal.name;
     if (currentSessionForActiveGoal.sessionTimeInSeconds) {

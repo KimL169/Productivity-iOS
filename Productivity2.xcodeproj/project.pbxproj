@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B0B1CE71B2B3978009BDF34 /* Goal+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0B1CE61B2B3978009BDF34 /* Goal+Helper.m */; };
 		3B2DEE781ACE64C30065F39D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B2DEE771ACE64C30065F39D /* main.m */; };
 		3B2DEE7B1ACE64C30065F39D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B2DEE7A1ACE64C30065F39D /* AppDelegate.m */; };
 		3B2DEE7E1ACE64C30065F39D /* Productivity2.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3B2DEE7C1ACE64C30065F39D /* Productivity2.xcdatamodeld */; };
@@ -37,6 +38,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3B0B1CE51B2B3978009BDF34 /* Goal+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Goal+Helper.h"; sourceTree = "<group>"; };
+		3B0B1CE61B2B3978009BDF34 /* Goal+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Goal+Helper.m"; sourceTree = "<group>"; };
 		3B2DEE721ACE64C30065F39D /* Productivity2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Productivity2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B2DEE761ACE64C30065F39D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3B2DEE771ACE64C30065F39D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -157,6 +160,8 @@
 				3B2DEEA91ACED47C0065F39D /* GoalTimer.m */,
 				3BB7E0C11B26FF4200586C51 /* Goal.h */,
 				3BB7E0C21B26FF4200586C51 /* Goal.m */,
+				3B0B1CE51B2B3978009BDF34 /* Goal+Helper.h */,
+				3B0B1CE61B2B3978009BDF34 /* Goal+Helper.m */,
 				3BB7E0BE1B26FF4200586C51 /* Session.h */,
 				3BB7E0BF1B26FF4200586C51 /* Session.m */,
 				3B2DEE7C1ACE64C30065F39D /* Productivity2.xcdatamodeld */,
@@ -283,6 +288,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3B2DEE7B1ACE64C30065F39D /* AppDelegate.m in Sources */,
+				3B0B1CE71B2B3978009BDF34 /* Goal+Helper.m in Sources */,
 				3B2DEEAA1ACED47C0065F39D /* GoalTimer.m in Sources */,
 				3B533F701B25E770001D03F8 /* CoreDataViewController.m in Sources */,
 				3B75078C1B20539400D0054C /* CreateGoalViewController.m in Sources */,

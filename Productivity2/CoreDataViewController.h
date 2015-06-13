@@ -22,7 +22,4 @@
 - (void)saveManagedObjectContext;
 - (void)performFetch;
 
-- (Session *)fetchCurrentSessionForGoal:(Goal *)goal;
-- (NSArray *)fetchAllSessionsForGoal:(Goal *)goal;
-
 @end
