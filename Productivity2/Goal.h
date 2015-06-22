@@ -2,7 +2,7 @@
 //  Goal.h
 //  Productivity2
 //
-//  Created by Kim on 09/06/15.
+//  Created by Kim on 14/06/15.
 //  Copyright (c) 2015 Kim. All rights reserved.
 //
 
@@ -20,14 +20,8 @@
 @property (nonatomic, retain) NSNumber * plannedRounds;
 @property (nonatomic, retain) NSNumber * plannedSessionTime;
 @property (nonatomic, retain) NSNumber * totalTimeInSeconds;
+@property (nonatomic, retain) NSNumber * active;
 @property (nonatomic, retain) NSSet *sessions;
-
-typedef NS_ENUM(NSUInteger, goalMode){
-    GoalTaskMode,
-    GoalStopWatchMode,
-    GoalCountDownMode
-};
-
 @end
 
 @interface Goal (CoreDataGeneratedAccessors)
@@ -36,6 +30,5 @@ typedef NS_ENUM(NSUInteger, goalMode){
 - (void)removeSessionsObject:(Session *)value;
 - (void)addSessions:(NSSet *)values;
 - (void)removeSessions:(NSSet *)values;
-
 
 @end

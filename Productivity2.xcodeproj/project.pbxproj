@@ -21,8 +21,8 @@
 		3B2DEEAA1ACED47C0065F39D /* GoalTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B2DEEA91ACED47C0065F39D /* GoalTimer.m */; };
 		3B533F701B25E770001D03F8 /* CoreDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B533F6F1B25E770001D03F8 /* CoreDataViewController.m */; };
 		3B75078C1B20539400D0054C /* CreateGoalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B75078B1B20539400D0054C /* CreateGoalViewController.m */; };
+		3B7885F61B2DD15D00FE20FD /* Goal.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7885F51B2DD15D00FE20FD /* Goal.m */; };
 		3BB7E0C01B26FF4200586C51 /* Session.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BB7E0BF1B26FF4200586C51 /* Session.m */; };
-		3BB7E0C31B26FF4200586C51 /* Goal.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BB7E0C21B26FF4200586C51 /* Goal.m */; };
 		3BB7E0C61B27010C00586C51 /* NSDate+helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BB7E0C51B27010C00586C51 /* NSDate+helper.m */; };
 		3BE8E10A1B235C1500B0F677 /* NSNumber+time.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BE8E1091B235C1500B0F677 /* NSNumber+time.m */; };
 /* End PBXBuildFile section */
@@ -63,10 +63,10 @@
 		3B533F6F1B25E770001D03F8 /* CoreDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataViewController.m; sourceTree = "<group>"; };
 		3B75078A1B20539400D0054C /* CreateGoalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateGoalViewController.h; sourceTree = "<group>"; };
 		3B75078B1B20539400D0054C /* CreateGoalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateGoalViewController.m; sourceTree = "<group>"; };
+		3B7885F41B2DD15D00FE20FD /* Goal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Goal.h; sourceTree = "<group>"; };
+		3B7885F51B2DD15D00FE20FD /* Goal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Goal.m; sourceTree = "<group>"; };
 		3BB7E0BE1B26FF4200586C51 /* Session.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Session.h; path = ../Session.h; sourceTree = "<group>"; };
 		3BB7E0BF1B26FF4200586C51 /* Session.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Session.m; path = ../Session.m; sourceTree = "<group>"; };
-		3BB7E0C11B26FF4200586C51 /* Goal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Goal.h; path = ../Goal.h; sourceTree = "<group>"; };
-		3BB7E0C21B26FF4200586C51 /* Goal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Goal.m; path = ../Goal.m; sourceTree = "<group>"; };
 		3BB7E0C41B27010C00586C51 /* NSDate+helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+helper.h"; sourceTree = "<group>"; };
 		3BB7E0C51B27010C00586C51 /* NSDate+helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+helper.m"; sourceTree = "<group>"; };
 		3BE8E1081B235C1500B0F677 /* NSNumber+time.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+time.h"; sourceTree = "<group>"; };
@@ -158,13 +158,13 @@
 			children = (
 				3B2DEEA81ACED47C0065F39D /* GoalTimer.h */,
 				3B2DEEA91ACED47C0065F39D /* GoalTimer.m */,
-				3BB7E0C11B26FF4200586C51 /* Goal.h */,
-				3BB7E0C21B26FF4200586C51 /* Goal.m */,
 				3B0B1CE51B2B3978009BDF34 /* Goal+Helper.h */,
 				3B0B1CE61B2B3978009BDF34 /* Goal+Helper.m */,
 				3BB7E0BE1B26FF4200586C51 /* Session.h */,
 				3BB7E0BF1B26FF4200586C51 /* Session.m */,
 				3B2DEE7C1ACE64C30065F39D /* Productivity2.xcdatamodeld */,
+				3B7885F41B2DD15D00FE20FD /* Goal.h */,
+				3B7885F51B2DD15D00FE20FD /* Goal.m */,
 			);
 			name = models;
 			sourceTree = "<group>";
@@ -287,6 +287,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B7885F61B2DD15D00FE20FD /* Goal.m in Sources */,
 				3B2DEE7B1ACE64C30065F39D /* AppDelegate.m in Sources */,
 				3B0B1CE71B2B3978009BDF34 /* Goal+Helper.m in Sources */,
 				3B2DEEAA1ACED47C0065F39D /* GoalTimer.m in Sources */,
@@ -299,7 +300,6 @@
 				3B2DEE811ACE64C30065F39D /* ViewController.m in Sources */,
 				3B2DEE7E1ACE64C30065F39D /* Productivity2.xcdatamodeld in Sources */,
 				3B2DEEA71ACE67550065F39D /* MainGoalTimerCell.m in Sources */,
-				3BB7E0C31B26FF4200586C51 /* Goal.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

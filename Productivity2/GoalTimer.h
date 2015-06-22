@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Goal.h"
+#import "Goal+Helper.h"
 
 @interface GoalTimer : NSObject
 

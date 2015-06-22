@@ -159,7 +159,6 @@
 	 forChangeType:(NSFetchedResultsChangeType)type
 	  newIndexPath:(NSIndexPath *)newIndexPath
 {
-    
     // responses for type (insert, delete, update, move).
     switch(type)
     {

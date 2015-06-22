@@ -26,9 +26,6 @@ int hours, minutes, seconds;
         [self setValue:[NSNumber numberWithInt:(int)startingSecondsLeft] forKey:@"countingSeconds"];
         self.startingRounds = (int)rounds;
         self.roundsLeft = (int)rounds;
-        
-        NSLog(@"secondsLeft: %d", [self.countingSeconds intValue]);
-        //set the hours/minutes/seconds
         self.hours = self.minutes = self.seconds = 0;
     }
     

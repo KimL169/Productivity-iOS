@@ -2,7 +2,7 @@
 //  Goal.m
 //  Productivity2
 //
-//  Created by Kim on 09/06/15.
+//  Created by Kim on 14/06/15.
 //  Copyright (c) 2015 Kim. All rights reserved.
 //
 
@@ -19,7 +19,7 @@
 @dynamic plannedRounds;
 @dynamic plannedSessionTime;
 @dynamic totalTimeInSeconds;
+@dynamic active;
 @dynamic sessions;
-
 
 @end

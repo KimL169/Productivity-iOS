@@ -7,8 +7,14 @@
 //
 
 #import "CreateGoalViewController.h"
+#import "Goal+Helper.h"
 
 @interface CreateGoalViewController ()
+@property (weak, nonatomic) IBOutlet UITextField *goalNameTextField;
+@property (weak, nonatomic) IBOutlet UITextField *hoursTextField;
+@property (weak, nonatomic) IBOutlet UITextField *minutesTextField;
+@property (weak, nonatomic) IBOutlet UITextField *secondsTextField;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *goalModeSegmentControl;
 
 @end
 
@@ -17,6 +23,48 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+}
+- (IBAction)cancelButton:(UIBarButtonItem *)sender {
+    
+    [[self managedObjectContext] rollback];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)saveButton:(UIBarButtonItem *)sender {
+    
+    
+    [self setGoalValues];
+#warning learn about custom getters and setters to immediately change the textfield input to seconds upon entering.
+    [self saveManagedObjectContext];
+    [self dismissViewControllerAnimated:YES completion:nil];
+
+}
+
+- (BOOL)setGoalValues{
+    _addGoal.name = _goalNameTextField.text;
+    _addGoal.mode = [NSNumber numberWithInt:(int)_goalModeSegmentControl.selectedSegmentIndex];
+    _addGoal.plannedRounds = [NSNumber numberWithInt:5];
+    _addGoal.plannedSessionTime = [NSNumber numberWithInt:10];
+    _addGoal.totalTimeInSeconds = [NSNumber numberWithInt:0];
+    return true;
+}
+
+- (IBAction)goalModeSegmentControl:(UISegmentedControl *)sender {
+    NSLog(@"goalMode changed");
+    switch (sender.selectedSegmentIndex) {
+        case GoalCountDownMode:
+            //change the UI to the correct type of setting
+            break;
+        case GoalStopWatchMode:
+            //change the UI to the correct type of setting
+            break;
+        case GoalTaskMode:
+            //change the UI to the correct type of setting
+            break;
+            
+        default:
+            break;
+    }
 }
 
 - (void)didReceiveMemoryWarning {

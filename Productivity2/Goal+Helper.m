@@ -33,6 +33,7 @@
     switch ([self.mode intValue]) {
         case GoalCountDownMode:
             newSession.sessionTimeInSeconds = self.plannedSessionTime;
+            newSession.rounds = [NSNumber numberWithInt:1]; //start at one
             break;
         case GoalStopWatchMode:
             //TODO
@@ -40,7 +41,6 @@
         default:
             break;
     }
-    
     return newSession;
 }
 

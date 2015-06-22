@@ -13,4 +13,10 @@
 - (Session *)fetchCurrentSessionForGoal;
 - (Session *)returnCurrentOrNewSession;
 
+typedef NS_ENUM(NSUInteger, goalMode){
+    GoalStopWatchMode,
+    GoalCountDownMode,
+    GoalTaskMode
+};
+
 @end

@@ -20,7 +20,6 @@
 @property (nonatomic, strong) NSIndexPath *activeGoalIndex;
 
 #define CELL_HEIGHT 120
-
 @end
 
 @implementation ViewController
@@ -30,16 +29,15 @@
     // Do any additional setup after loading the view, typically from a nib.
     self.timer = [[GoalTimer alloc]init];
     
-//
-    Goal *newGoal = [NSEntityDescription insertNewObjectForEntityForName:@"Goal" inManagedObjectContext:[super managedObjectContext]];
-    newGoal.name = @"Workout";
-    newGoal.mode = [NSNumber numberWithInt:GoalCountDownMode];
-    newGoal.plannedRounds = [NSNumber numberWithInt:5];
-    newGoal.plannedSessionTime = [NSNumber numberWithInt:10];
-    newGoal.totalTimeInSeconds = [NSNumber numberWithInt:0];
-    
-    //make a new session for the goal.
-    [newGoal returnCurrentOrNewSession];
+//    Goal *newGoal = [NSEntityDescription insertNewObjectForEntityForName:@"Goal" inManagedObjectContext:[super managedObjectContext]];
+//    newGoal.name = @"Workout";
+//    newGoal.mode = [NSNumber numberWithInt:GoalCountDownMode];
+//    newGoal.plannedRounds = [NSNumber numberWithInt:5];
+//    newGoal.plannedSessionTime = [NSNumber numberWithInt:10];
+//    newGoal.totalTimeInSeconds = [NSNumber numberWithInt:0];
+//    
+//    //make a new session for the goal.
+//    [newGoal returnCurrentOrNewSession];
     
     [self saveManagedObjectContext];
     
@@ -48,15 +46,13 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
     //add the observer for timer
     [self.timer addObserver:self forKeyPath:@"countingSeconds" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    
-    //remove the observer
+    //remove the observer for timer
     [self.timer removeObserver:self forKeyPath:@"countingSeconds"];
 }
 
@@ -73,7 +69,7 @@
         Goal* activeGoal = [self.fetchedResultsController objectAtIndexPath:_activeGoalIndex];
         
         //get the current session for the goal
-        Session *currentSessionForActiveGoal = [activeGoal fetchCurrentSessionForGoal];
+        Session *currentSessionForActiveGoal = [activeGoal returnCurrentOrNewSession];
        
         //update session and total time.
         currentSessionForActiveGoal.sessionTimeInSeconds = self.timer.countingSeconds;
@@ -91,6 +87,7 @@
             NSLog(@"newTotalTime:%d", newTotalTime);
             activeGoal.totalTimeInSeconds = [NSNumber numberWithInt:newTotalTime];
         }
+        
     }
     
 }
@@ -126,7 +123,7 @@
     //make the newly selected goal the active goal
     Goal *activeGoal = [self.fetchedResultsController objectAtIndexPath:_activeGoalIndex];
     //get the current session for the acitve goal
-    Session *currentSessionForActiveGoal = [activeGoal fetchCurrentSessionForGoal];
+    Session *currentSessionForActiveGoal = [activeGoal returnCurrentOrNewSession];
     
     switch ([activeGoal.mode intValue]) {
         case GoalCountDownMode:
@@ -158,7 +155,7 @@
 - (void)tableView:(UITableView *)tableView willDisplayCell:(MainGoalTimerCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     Goal *goal = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    Session *currentSessionForActiveGoal = [goal fetchCurrentSessionForGoal];
+    Session *currentSessionForActiveGoal = [goal returnCurrentOrNewSession];
     
     cell.nameLabel.text = goal.name;
     cell.timeLabel.text = [NSString stringWithFormat:@"%.2d:%.2d:%.2d", [currentSessionForActiveGoal.sessionTimeInSeconds hours], [currentSessionForActiveGoal.sessionTimeInSeconds minutesMinusHours], [currentSessionForActiveGoal.sessionTimeInSeconds secondsMinusMinutesMinutesHours]];
@@ -202,8 +199,12 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
+    
     //segue to the viewcontroller for adding goals.
     if ([[segue identifier] isEqualToString:@"addGoal"]) {
+        
+#warning think about this do we need to save here?
+        [self saveManagedObjectContext];
         
         UINavigationController *navigationController = segue.destinationViewController;
         CreateGoalViewController *vc = (CreateGoalViewController *)navigationController.topViewController;

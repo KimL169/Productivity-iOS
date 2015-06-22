@@ -23,7 +23,6 @@
 - (int)minutesMinusHours {
     int hours = [self hours];
     int remainingSeconds = [self intValue] - (hours * 3600);
-    
     return remainingSeconds % 3600 / 60;
 }
 
