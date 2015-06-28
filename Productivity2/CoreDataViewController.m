@@ -7,8 +7,8 @@
 //
 
 #import "CoreDataViewController.h"
-#import "MainGoalTimerCell.h"
-#import "NSDate+helper.h"
+#import "Item.h"
+#import "ItemTableViewCell.h"
 
 @implementation CoreDataViewController
 
@@ -33,9 +33,9 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        Goal *goalToDelete = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        Item *itemToDelete = [self.fetchedResultsController objectAtIndexPath:indexPath];
         
-        [[self managedObjectContext] deleteObject:goalToDelete];
+        [[self managedObjectContext] deleteObject:itemToDelete];
        
 //TODO: Update the goal number of the other goals. For reference, see gymregime DietPlanDaysTableViewController
     }
@@ -58,12 +58,12 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    static NSString *cellIdentifier = @"timerCell";
+    static NSString *cellIdentifier = @"itemCell";
     
-    MainGoalTimerCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    ItemTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     if (cell == nil) {
-        NSArray *nib = [[NSBundle mainBundle]loadNibNamed:@"MainGoalTimerCell" owner:self options:nil];
+        NSArray *nib = [[NSBundle mainBundle]loadNibNamed:@"ItemTableViewCell" owner:self options:nil];
         cell = [nib objectAtIndex:0];
     }
     
@@ -80,13 +80,13 @@
     
     _context = [self managedObjectContext];
     
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Goal" inManagedObjectContext:_context];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Item" inManagedObjectContext:_context];
     
     //set the fetch request to the Patient entity
     [fetchRequest setEntity:entity];
     
     //sort on patients last name, ascending;
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc]initWithKey:@"name" ascending:YES];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc]initWithKey:@"date" ascending:YES];
     
     //make an array of the descriptor because the fetchrequest argument takes an array.
     NSArray *sortDescriptors = [[NSArray alloc]initWithObjects:sortDescriptor, nil];

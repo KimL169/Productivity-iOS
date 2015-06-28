@@ -22,6 +22,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _addGoal = [NSEntityDescription insertNewObjectForEntityForName:@"Goal" inManagedObjectContext:[self managedObjectContext]];
     // Do any additional setup after loading the view.
 }
 - (IBAction)cancelButton:(UIBarButtonItem *)sender {
@@ -33,7 +34,9 @@
 - (IBAction)saveButton:(UIBarButtonItem *)sender {
     
     
-    [self setGoalValues];
+    if (![self setGoalValues]) {
+        
+    }
 #warning learn about custom getters and setters to immediately change the textfield input to seconds upon entering.
     [self saveManagedObjectContext];
     [self dismissViewControllerAnimated:YES completion:nil];

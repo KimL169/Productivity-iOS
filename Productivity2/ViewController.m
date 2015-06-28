@@ -107,7 +107,7 @@
         [self stopTimerForIndexPath:indexPath];
     } else if ([self.timer.timer isValid] && indexPath != _activeGoalIndex){
         
-//TODO: notifiy user that he cannot press the tableview because another is busy..
+#warning notifiy user that he cannot press the tableview because another is busy..
     } else {
         //start a new timer
         [self startNewGoalTimerForIndexPath:indexPath];
@@ -127,8 +127,9 @@
     
     switch ([activeGoal.mode intValue]) {
         case GoalCountDownMode:
-            if (currentSessionForActiveGoal.sessionTimeInSeconds == 0) {
+            if ([currentSessionForActiveGoal.sessionTimeInSeconds intValue] == 0) {
                 currentSessionForActiveGoal.sessionTimeInSeconds = activeGoal.plannedSessionTime;
+                NSLog(@"sessiontime %d", [currentSessionForActiveGoal.sessionTimeInSeconds intValue]);
             }
             break;
         case GoalStopWatchMode:
@@ -156,7 +157,7 @@
     
     Goal *goal = [self.fetchedResultsController objectAtIndexPath:indexPath];
     Session *currentSessionForActiveGoal = [goal returnCurrentOrNewSession];
-    
+    NSLog(@"rounds: %d", [currentSessionForActiveGoal.rounds intValue]);
     cell.nameLabel.text = goal.name;
     cell.timeLabel.text = [NSString stringWithFormat:@"%.2d:%.2d:%.2d", [currentSessionForActiveGoal.sessionTimeInSeconds hours], [currentSessionForActiveGoal.sessionTimeInSeconds minutesMinusHours], [currentSessionForActiveGoal.sessionTimeInSeconds secondsMinusMinutesMinutesHours]];
     
@@ -208,8 +209,6 @@
         
         UINavigationController *navigationController = segue.destinationViewController;
         CreateGoalViewController *vc = (CreateGoalViewController *)navigationController.topViewController;
-        Goal *addGoal = [NSEntityDescription insertNewObjectForEntityForName:@"Goal" inManagedObjectContext:[self managedObjectContext]];
-        vc.addGoal = addGoal;
     }
 }
 

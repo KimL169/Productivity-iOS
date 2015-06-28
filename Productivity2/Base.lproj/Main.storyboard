@@ -33,7 +33,7 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="poy-Us-I4e"/>
                                 </connections>
                             </tableView>
-                            <pageControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="Cl0-8H-HjZ">
+                            <pageControl opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" currentPage="1" translatesAutoresizingMaskIntoConstraints="NO" id="Cl0-8H-HjZ">
                                 <rect key="frame" x="281" y="563" width="39" height="37"/>
                                 <color key="pageIndicatorTintColor" red="0.54625717470000001" green="0.54625717470000001" blue="0.54625717470000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="currentPageIndicatorTintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -41,22 +41,22 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="Cl0-8H-HjZ" secondAttribute="trailing" constant="164" id="6QJ-Wz-xNo"/>
-                            <constraint firstItem="Cl0-8H-HjZ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="165" id="INZ-Hi-KES"/>
                             <constraint firstAttribute="trailing" secondItem="pa2-49-kMS" secondAttribute="trailing" id="caE-By-Qyw"/>
                             <constraint firstItem="pa2-49-kMS" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="eBb-AD-UdI"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="pa2-49-kMS" secondAttribute="bottom" constant="45" id="lTS-SJ-Qrj"/>
                             <constraint firstItem="Cl0-8H-HjZ" firstAttribute="top" secondItem="pa2-49-kMS" secondAttribute="bottom" constant="8" symbolic="YES" id="qIA-rO-zhp"/>
-                            <constraint firstItem="pa2-49-kMS" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="v03-Qo-Ebs"/>
+                            <constraint firstItem="pa2-49-kMS" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="v03-Qo-Ebs">
+                                <variation key="widthClass=compact" constant="-64"/>
+                            </constraint>
+                            <constraint firstAttribute="centerX" secondItem="Cl0-8H-HjZ" secondAttribute="centerX" constant="-0.5" id="zlI-dP-CI6"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="caE-By-Qyw"/>
                                 <exclude reference="eBb-AD-UdI"/>
                                 <exclude reference="v03-Qo-Ebs"/>
-                                <exclude reference="6QJ-Wz-xNo"/>
-                                <exclude reference="INZ-Hi-KES"/>
                                 <exclude reference="qIA-rO-zhp"/>
+                                <exclude reference="zlI-dP-CI6"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -64,9 +64,8 @@
                                 <include reference="caE-By-Qyw"/>
                                 <include reference="eBb-AD-UdI"/>
                                 <include reference="v03-Qo-Ebs"/>
-                                <include reference="6QJ-Wz-xNo"/>
-                                <include reference="INZ-Hi-KES"/>
                                 <include reference="qIA-rO-zhp"/>
+                                <include reference="zlI-dP-CI6"/>
                             </mask>
                         </variation>
                     </view>
