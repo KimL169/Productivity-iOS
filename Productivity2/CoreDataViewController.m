@@ -36,8 +36,7 @@
         Item *itemToDelete = [self.fetchedResultsController objectAtIndexPath:indexPath];
         
         [[self managedObjectContext] deleteObject:itemToDelete];
-       
-//TODO: Update the goal number of the other goals. For reference, see gymregime DietPlanDaysTableViewController
+        [self saveManagedObjectContext];
     }
 }
 
