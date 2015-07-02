@@ -16,6 +16,10 @@
 @property (nonatomic, strong) NSManagedObjectContext *context;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
+- (NSArray *)performFetchWithEntityName:(NSString *)entityName
+                              predicate:(NSPredicate *)predicate
+                         sortDescriptor:(NSSortDescriptor *)sortDescriptor;
+
 - (NSManagedObjectContext *)managedObjectContext;
 - (void)saveManagedObjectContext;
 - (void)performFetch;
