@@ -21,6 +21,7 @@
 		3B2DEEAA1ACED47C0065F39D /* GoalTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B2DEEA91ACED47C0065F39D /* GoalTimer.m */; };
 		3B75078C1B20539400D0054C /* CreateGoalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B75078B1B20539400D0054C /* CreateGoalViewController.m */; };
 		3B7885F61B2DD15D00FE20FD /* Goal.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7885F51B2DD15D00FE20FD /* Goal.m */; };
+		3B7A2D411B45C99E00E1ED5E /* CoreDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B7A2D401B45C99E00E1ED5E /* CoreDataViewController.m */; };
 		3BB7E0C01B26FF4200586C51 /* Session.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BB7E0BF1B26FF4200586C51 /* Session.m */; };
 		3BB7E0C61B27010C00586C51 /* NSDate+helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BB7E0C51B27010C00586C51 /* NSDate+helper.m */; };
 		3BE8E10A1B235C1500B0F677 /* NSNumber+time.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BE8E1091B235C1500B0F677 /* NSNumber+time.m */; };
@@ -62,6 +63,8 @@
 		3B75078B1B20539400D0054C /* CreateGoalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateGoalViewController.m; sourceTree = "<group>"; };
 		3B7885F41B2DD15D00FE20FD /* Goal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Goal.h; sourceTree = "<group>"; };
 		3B7885F51B2DD15D00FE20FD /* Goal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Goal.m; sourceTree = "<group>"; };
+		3B7A2D3F1B45C99E00E1ED5E /* CoreDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataViewController.h; sourceTree = "<group>"; };
+		3B7A2D401B45C99E00E1ED5E /* CoreDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataViewController.m; sourceTree = "<group>"; };
 		3BB7E0BE1B26FF4200586C51 /* Session.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Session.h; path = ../Session.h; sourceTree = "<group>"; };
 		3BB7E0BF1B26FF4200586C51 /* Session.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Session.m; path = ../Session.m; sourceTree = "<group>"; };
 		3BB7E0C41B27010C00586C51 /* NSDate+helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+helper.h"; sourceTree = "<group>"; };
@@ -171,6 +174,8 @@
 			children = (
 				3B75078A1B20539400D0054C /* CreateGoalViewController.h */,
 				3B75078B1B20539400D0054C /* CreateGoalViewController.m */,
+				3B7A2D3F1B45C99E00E1ED5E /* CoreDataViewController.h */,
+				3B7A2D401B45C99E00E1ED5E /* CoreDataViewController.m */,
 				3B2DEE7F1ACE64C30065F39D /* ViewController.h */,
 				3B2DEE801ACE64C30065F39D /* ViewController.m */,
 				3B2DEE821ACE64C30065F39D /* Main.storyboard */,
@@ -288,6 +293,7 @@
 				3B2DEEAA1ACED47C0065F39D /* GoalTimer.m in Sources */,
 				3B75078C1B20539400D0054C /* CreateGoalViewController.m in Sources */,
 				3BB7E0C61B27010C00586C51 /* NSDate+helper.m in Sources */,
+				3B7A2D411B45C99E00E1ED5E /* CoreDataViewController.m in Sources */,
 				3BE8E10A1B235C1500B0F677 /* NSNumber+time.m in Sources */,
 				3B2DEE781ACE64C30065F39D /* main.m in Sources */,
 				3BB7E0C01B26FF4200586C51 /* Session.m in Sources */,

@@ -12,6 +12,7 @@
 #import "CreateGoalViewController.h"
 #import "NSNumber+time.h"
 #import "Goal+Helper.h" 
+#import "Session.h"
 #import "MainGoalTimerCell.h"
 
 @interface ViewController ()
@@ -206,9 +207,6 @@
         
 #warning think about this do we need to save here?
         [self saveManagedObjectContext];
-        
-        UINavigationController *navigationController = segue.destinationViewController;
-        CreateGoalViewController *vc = (CreateGoalViewController *)navigationController.topViewController;
     }
 }
 
