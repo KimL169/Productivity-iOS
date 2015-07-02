@@ -93,8 +93,6 @@
     
 }
 
-
-
 #pragma mark - Tableview methodscontext	
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
