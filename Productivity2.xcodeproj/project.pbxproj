@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		3B0B1CE71B2B3978009BDF34 /* Goal+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0B1CE61B2B3978009BDF34 /* Goal+Helper.m */; };
+		3B1627D61B486513001EB36F /* PageContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B1627D51B486513001EB36F /* PageContentViewController.m */; };
+		3B1627D91B486550001EB36F /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B1627D81B486550001EB36F /* RootViewController.m */; };
+		3B1627DC1B487E4C001EB36F /* ArchiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1627DB1B487E4C001EB36F /* ArchiveViewController.swift */; };
+		3B1627DE1B4884F6001EB36F /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1627DD1B4884F6001EB36F /* CalendarViewController.swift */; };
 		3B2DEE781ACE64C30065F39D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B2DEE771ACE64C30065F39D /* main.m */; };
 		3B2DEE7B1ACE64C30065F39D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B2DEE7A1ACE64C30065F39D /* AppDelegate.m */; };
 		3B2DEE7E1ACE64C30065F39D /* Productivity2.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3B2DEE7C1ACE64C30065F39D /* Productivity2.xcdatamodeld */; };
@@ -40,6 +44,13 @@
 /* Begin PBXFileReference section */
 		3B0B1CE51B2B3978009BDF34 /* Goal+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Goal+Helper.h"; sourceTree = "<group>"; };
 		3B0B1CE61B2B3978009BDF34 /* Goal+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Goal+Helper.m"; sourceTree = "<group>"; };
+		3B1627D41B486513001EB36F /* PageContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageContentViewController.h; sourceTree = "<group>"; };
+		3B1627D51B486513001EB36F /* PageContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageContentViewController.m; sourceTree = "<group>"; };
+		3B1627D71B486550001EB36F /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		3B1627D81B486550001EB36F /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		3B1627DA1B487E4C001EB36F /* Productivity2-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Productivity2-Bridging-Header.h"; sourceTree = "<group>"; };
+		3B1627DB1B487E4C001EB36F /* ArchiveViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchiveViewController.swift; sourceTree = "<group>"; };
+		3B1627DD1B4884F6001EB36F /* CalendarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		3B2DEE721ACE64C30065F39D /* Productivity2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Productivity2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B2DEE761ACE64C30065F39D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3B2DEE771ACE64C30065F39D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -172,6 +183,10 @@
 		3B7507891B2051AE00D0054C /* views */ = {
 			isa = PBXGroup;
 			children = (
+				3B1627D41B486513001EB36F /* PageContentViewController.h */,
+				3B1627D51B486513001EB36F /* PageContentViewController.m */,
+				3B1627D71B486550001EB36F /* RootViewController.h */,
+				3B1627D81B486550001EB36F /* RootViewController.m */,
 				3B75078A1B20539400D0054C /* CreateGoalViewController.h */,
 				3B75078B1B20539400D0054C /* CreateGoalViewController.m */,
 				3B7A2D3F1B45C99E00E1ED5E /* CoreDataViewController.h */,
@@ -179,9 +194,12 @@
 				3B2DEE7F1ACE64C30065F39D /* ViewController.h */,
 				3B2DEE801ACE64C30065F39D /* ViewController.m */,
 				3B2DEE821ACE64C30065F39D /* Main.storyboard */,
+				3B1627DB1B487E4C001EB36F /* ArchiveViewController.swift */,
+				3B1627DD1B4884F6001EB36F /* CalendarViewController.swift */,
 				3B2DEEA31ACE67050065F39D /* MainGoalTimerCell.xib */,
 				3B2DEEA51ACE67550065F39D /* MainGoalTimerCell.h */,
 				3B2DEEA61ACE67550065F39D /* MainGoalTimerCell.m */,
+				3B1627DA1B487E4C001EB36F /* Productivity2-Bridging-Header.h */,
 			);
 			name = views;
 			sourceTree = "<group>";
@@ -289,17 +307,21 @@
 			files = (
 				3B7885F61B2DD15D00FE20FD /* Goal.m in Sources */,
 				3B2DEE7B1ACE64C30065F39D /* AppDelegate.m in Sources */,
+				3B1627DE1B4884F6001EB36F /* CalendarViewController.swift in Sources */,
 				3B0B1CE71B2B3978009BDF34 /* Goal+Helper.m in Sources */,
 				3B2DEEAA1ACED47C0065F39D /* GoalTimer.m in Sources */,
 				3B75078C1B20539400D0054C /* CreateGoalViewController.m in Sources */,
 				3BB7E0C61B27010C00586C51 /* NSDate+helper.m in Sources */,
 				3B7A2D411B45C99E00E1ED5E /* CoreDataViewController.m in Sources */,
+				3B1627DC1B487E4C001EB36F /* ArchiveViewController.swift in Sources */,
 				3BE8E10A1B235C1500B0F677 /* NSNumber+time.m in Sources */,
 				3B2DEE781ACE64C30065F39D /* main.m in Sources */,
+				3B1627D61B486513001EB36F /* PageContentViewController.m in Sources */,
 				3BB7E0C01B26FF4200586C51 /* Session.m in Sources */,
 				3B2DEE811ACE64C30065F39D /* ViewController.m in Sources */,
 				3B2DEE7E1ACE64C30065F39D /* Productivity2.xcdatamodeld in Sources */,
 				3B2DEEA71ACE67550065F39D /* MainGoalTimerCell.m in Sources */,
+				3B1627D91B486550001EB36F /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -423,9 +445,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Productivity2/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Productivity2/Productivity2-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -433,9 +458,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Productivity2/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Productivity2/Productivity2-Bridging-Header.h";
 			};
 			name = Release;
 		};

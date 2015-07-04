@@ -32,14 +32,6 @@
     }
 }
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        Goal *goalToDelete = [self.fetchedResultsController objectAtIndexPath:indexPath];
-        
-        [[self managedObjectContext] deleteObject:goalToDelete];
-        [self saveManagedObjectContext];
-    }
-}
 
 #pragma mark - tableview methods
 
@@ -56,19 +48,6 @@
     return [[self.fetchedResultsController sections]count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    static NSString *cellIdentifier = @"itemCell";
-    
-    MainGoalTimerCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    
-    if (cell == nil) {
-        NSArray *nib = [[NSBundle mainBundle]loadNibNamed:@"MainGoalTimerCell" owner:self options:nil];
-        cell = [nib objectAtIndex:0];
-    }
-    
-    return cell;
-}
 
 #pragma mark - fetchedResultsController methods
 

@@ -152,6 +152,29 @@
 //TODO: if countdown it needs to finish the session in order to be counted!!
 }
 
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        Goal *goalToDelete = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        
+        [[self managedObjectContext] deleteObject:goalToDelete];
+        [self saveManagedObjectContext];
+    }
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    static NSString *cellIdentifier = @"itemCell";
+    
+    MainGoalTimerCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    
+    if (cell == nil) {
+        NSArray *nib = [[NSBundle mainBundle]loadNibNamed:@"MainGoalTimerCell" owner:self options:nil];
+        cell = [nib objectAtIndex:0];
+    }
+    
+    return cell;
+}
+
 - (void)tableView:(UITableView *)tableView willDisplayCell:(MainGoalTimerCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     Goal *goal = [self.fetchedResultsController objectAtIndexPath:indexPath];
@@ -175,16 +198,6 @@
     }
 }
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        NSManagedObjectContext *context = [super managedObjectContext];
-        Goal *goalToDelete = [self.fetchedResultsController objectAtIndexPath:indexPath];
-        [context deleteObject:goalToDelete];
-        
-        [self saveManagedObjectContext];
-    }
-}
 -(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     return YES;
 }
