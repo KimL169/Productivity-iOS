@@ -11,7 +11,7 @@
 #import "AppDelegate.h"
 #import "CoreDataViewController.h"
 
-@interface ViewController : CoreDataViewController 
+@interface ViewController : CoreDataViewController <UIGestureRecognizerDelegate>
 
 
 @end

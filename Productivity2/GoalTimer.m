@@ -42,11 +42,10 @@ int hours, minutes, seconds;
     self.countingSeconds = [NSNumber numberWithInt:seconds];
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerUpdate) userInfo:nil repeats:YES];
     
-   [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+   [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
 }
 
 - (void)timerUpdate {
-    
     int count = [self.countingSeconds intValue];
     switch (_mode) {
         case GoalStopWatchMode:

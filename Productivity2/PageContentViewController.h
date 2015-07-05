@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PageContentViewController : UIViewController
+@interface PageContentViewController : UIViewController <UIGestureRecognizerDelegate>
 @property NSUInteger pageIndex;
 
 @end

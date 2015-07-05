@@ -20,12 +20,8 @@
     
 }
 
-- (IBAction)startAgain:(UIButton *)sender {
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
     //create page view controller;
     self.pageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"PageViewController"];
@@ -41,6 +37,10 @@
     [self addChildViewController:_pageViewController];
     [self.view addSubview:_pageViewController.view];
     [self.pageViewController didMoveToParentViewController:self];
+    
+    for (UIGestureRecognizer *gR in super.view.gestureRecognizers) {
+        gR.delegate = self;
+    }
 
 }
 
@@ -105,10 +105,6 @@
     return pageContentViewController;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 - (NSInteger)presentationCountForPageViewController:(UIPageViewController *)pageViewController {
     

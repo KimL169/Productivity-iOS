@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "PageContentViewController.h"
 
-@interface RootViewController : UIViewController <UIPageViewControllerDataSource>
+@interface RootViewController : UIViewController <UIPageViewControllerDataSource, UIGestureRecognizerDelegate>
 
 @property (strong, nonatomic) UIPageViewController *pageViewController;
 @property (strong, nonatomic) NSArray *pageTitles;

@@ -40,9 +40,7 @@
 //    //make a new session for the goal.
 //    [newGoal returnCurrentOrNewSession];
     
-    [self saveManagedObjectContext];
-    
-    [self performFetch];
+   [self performFetch];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -205,6 +203,7 @@
 -(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
     return UITableViewCellEditingStyleDelete;
 }
+
 
 
 

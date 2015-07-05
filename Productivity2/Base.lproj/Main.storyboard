@@ -14,6 +14,7 @@
                         <viewControllerLayoutGuide type="bottom" id="fdg-cZ-mjn"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="dWG-fn-3F0">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -39,6 +40,7 @@
                         <viewControllerLayoutGuide type="bottom" id="jwP-i4-gwk"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="zDX-gc-y32">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -56,6 +58,7 @@
                         <viewControllerLayoutGuide type="bottom" id="8AO-ci-6eg"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="xYJ-cz-Xl3">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="OGj-7F-aVA">
@@ -95,6 +98,7 @@
                         <viewControllerLayoutGuide type="bottom" id="WsA-Zu-YAq"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="W5k-LP-lZu">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jRZ-ae-WAs">
