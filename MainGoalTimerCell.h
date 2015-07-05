@@ -16,5 +16,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *totalTimeLabel;
 @property (weak, nonatomic) IBOutlet UIView *completionView;
 @property (weak, nonatomic) IBOutlet UILabel *roundsLabel;
+@property (weak, nonatomic) IBOutlet UIButton *optionsButton;
 
 @end

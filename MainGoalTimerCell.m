@@ -12,6 +12,7 @@
 
 - (void)awakeFromNib {
     
+    self.optionsButton.showsTouchWhenHighlighted = NO;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

@@ -19,7 +19,9 @@
 
 @property (nonatomic, strong) GoalTimer *timer;
 @property (nonatomic, strong) NSIndexPath *activeGoalIndex;
+@property (nonatomic) NSUInteger selectedIndex;
 
+#define NUMBER_OF_SECTIONS 1;
 #define CELL_HEIGHT 120
 @end
 
@@ -29,6 +31,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     self.timer = [[GoalTimer alloc]init];
+    self.tableView.delegate = self;
+    self.tableView.delaysContentTouches = NO;
     
 //    Goal *newGoal = [NSEntityDescription insertNewObjectForEntityForName:@"Goal" inManagedObjectContext:[super managedObjectContext]];
 //    newGoal.name = @"Workout";
@@ -41,6 +45,8 @@
 //    [newGoal returnCurrentOrNewSession];
     
    [self performFetch];
+    
+    _selectedIndex = -1;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -94,7 +100,35 @@
 #pragma mark - Tableview methodscontext	
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return CELL_HEIGHT;
+   
+    if (_selectedIndex == indexPath.row) {
+        return 240;
+    } else {
+        return 120;
+    }
+}
+
+- (void)optionsButtonWasPressed:(id)sender {
+    
+    //retrieve the indexpath for the button that was tapped.
+    MainGoalTimerCell *clickedCell = (MainGoalTimerCell *) [[sender superview]superview];
+    NSIndexPath *clickedButtonPath = [self.tableView indexPathForCell:clickedCell];
+    
+    if (_selectedIndex == clickedButtonPath.row) {
+        _selectedIndex = -1;
+        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:clickedButtonPath] withRowAnimation:UITableViewRowAnimationFade];
+        return;
+    }
+    if (_selectedIndex != -1) {
+        NSIndexPath *prevPath = [NSIndexPath indexPathForRow:_selectedIndex inSection:0];
+        _selectedIndex = clickedButtonPath.row;
+        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:prevPath] withRowAnimation:UITableViewRowAnimationFade];
+        return;
+    }
+    
+    _selectedIndex = clickedButtonPath.row;
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:clickedButtonPath] withRowAnimation:UITableViewRowAnimationFade];
+    
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -104,7 +138,7 @@
         [self stopTimerForIndexPath:indexPath];
     } else if ([self.timer.timer isValid] && indexPath != _activeGoalIndex){
         
-#warning notifiy user that he cannot press the tableview because another is busy..
+       //TODO
     } else {
         //start a new timer
         [self startNewGoalTimerForIndexPath:indexPath];
@@ -130,7 +164,6 @@
             }
             break;
         case GoalStopWatchMode:
-            
             break;
         default:
             break;
@@ -194,6 +227,12 @@
     } else {
         cell.playPauseLabel.text = @"▶︎";
     }
+    [cell.optionsButton addTarget:self action:@selector(optionsButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
+    
+    //make sure the cell's UI get covered when the cell size changes.
+    cell.clipsToBounds = YES;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+ 
 }
 
 -(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
