@@ -10,9 +10,15 @@
 
 @implementation MainGoalTimerCell
 
+- (void)changeClockViewColorForGoal:(Session *)session {
+   //TODO
+    if ([session.goal.mode integerValue] == GoalStopWatchMode) {
+        self.clockView.fillColor = [UIColor lightGrayColor];
+    }
+}
+
 - (void)awakeFromNib {
     
-    self.optionsButton.showsTouchWhenHighlighted = NO;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

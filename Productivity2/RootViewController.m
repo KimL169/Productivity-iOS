@@ -37,10 +37,6 @@
     [self addChildViewController:_pageViewController];
     [self.view addSubview:_pageViewController.view];
     [self.pageViewController didMoveToParentViewController:self];
-    
-    for (UIGestureRecognizer *gR in super.view.gestureRecognizers) {
-        gR.delegate = self;
-    }
 
 }
 
@@ -105,15 +101,14 @@
     return pageContentViewController;
 }
 
-
-- (NSInteger)presentationCountForPageViewController:(UIPageViewController *)pageViewController {
-    
-    return PAGE_COUNT;
-}
-
-- (NSInteger)presentationIndexForPageViewController:(UIPageViewController *)pageViewController {
-    return 1;
-}
+//
+//- (NSInteger)presentationCountForPageViewController:(UIPageViewController *)pageViewController {
+//    return PAGE_COUNT;
+//}
+//
+//- (NSInteger)presentationIndexForPageViewController:(UIPageViewController *)pageViewController {
+//    return 1;
+//}
 /*
 #pragma mark - Navigation
 

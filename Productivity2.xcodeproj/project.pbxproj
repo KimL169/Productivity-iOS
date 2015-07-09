@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B07E7AF1B4EBA6200D877D3 /* CountDownClockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B07E7AE1B4EBA6200D877D3 /* CountDownClockView.swift */; };
+		3B07E7B51B4EC9B700D877D3 /* RestTimerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B07E7B41B4EC9B700D877D3 /* RestTimerView.xib */; };
+		3B07E7B71B4ECA8600D877D3 /* RestTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B07E7B61B4ECA8600D877D3 /* RestTimerView.swift */; };
+		3B07E7BA1B4ED28300D877D3 /* UIView+ViewBorders.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B07E7B91B4ED28300D877D3 /* UIView+ViewBorders.m */; };
+		3B07E7BC1B4EDD9900D877D3 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B07E7BB1B4EDD9900D877D3 /* AudioToolbox.framework */; };
+		3B07E7C01B4F064000D877D3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B07E7BF1B4F064000D877D3 /* QuartzCore.framework */; };
 		3B0B1CE71B2B3978009BDF34 /* Goal+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B0B1CE61B2B3978009BDF34 /* Goal+Helper.m */; };
 		3B1627D61B486513001EB36F /* PageContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B1627D51B486513001EB36F /* PageContentViewController.m */; };
 		3B1627D91B486550001EB36F /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B1627D81B486550001EB36F /* RootViewController.m */; };
@@ -42,6 +48,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3B07E7AE1B4EBA6200D877D3 /* CountDownClockView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountDownClockView.swift; sourceTree = "<group>"; };
+		3B07E7B41B4EC9B700D877D3 /* RestTimerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RestTimerView.xib; path = ../RestTimerView.xib; sourceTree = "<group>"; };
+		3B07E7B61B4ECA8600D877D3 /* RestTimerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestTimerView.swift; sourceTree = "<group>"; };
+		3B07E7B81B4ED28300D877D3 /* UIView+ViewBorders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ViewBorders.h"; sourceTree = "<group>"; };
+		3B07E7B91B4ED28300D877D3 /* UIView+ViewBorders.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ViewBorders.m"; sourceTree = "<group>"; };
+		3B07E7BB1B4EDD9900D877D3 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		3B07E7BF1B4F064000D877D3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		3B0B1CE51B2B3978009BDF34 /* Goal+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Goal+Helper.h"; sourceTree = "<group>"; };
 		3B0B1CE61B2B3978009BDF34 /* Goal+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Goal+Helper.m"; sourceTree = "<group>"; };
 		3B1627D41B486513001EB36F /* PageContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageContentViewController.h; sourceTree = "<group>"; };
@@ -89,6 +102,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B07E7C01B4F064000D877D3 /* QuartzCore.framework in Frameworks */,
+				3B07E7BC1B4EDD9900D877D3 /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -134,9 +149,14 @@
 			isa = PBXGroup;
 			children = (
 				3B2DEE851ACE64C30065F39D /* Images.xcassets */,
+				3B07E7BF1B4F064000D877D3 /* QuartzCore.framework */,
+				3B07E7BB1B4EDD9900D877D3 /* AudioToolbox.framework */,
+				3B1627DA1B487E4C001EB36F /* Productivity2-Bridging-Header.h */,
 				3B2DEE871ACE64C30065F39D /* LaunchScreen.xib */,
 				3B2DEE791ACE64C30065F39D /* AppDelegate.h */,
 				3B2DEE7A1ACE64C30065F39D /* AppDelegate.m */,
+				3B07E7B81B4ED28300D877D3 /* UIView+ViewBorders.h */,
+				3B07E7B91B4ED28300D877D3 /* UIView+ViewBorders.m */,
 				3BB7E0C41B27010C00586C51 /* NSDate+helper.h */,
 				3BB7E0C51B27010C00586C51 /* NSDate+helper.m */,
 				3BE8E1081B235C1500B0F677 /* NSNumber+time.h */,
@@ -195,11 +215,13 @@
 				3B2DEE801ACE64C30065F39D /* ViewController.m */,
 				3B2DEE821ACE64C30065F39D /* Main.storyboard */,
 				3B1627DB1B487E4C001EB36F /* ArchiveViewController.swift */,
+				3B07E7AE1B4EBA6200D877D3 /* CountDownClockView.swift */,
 				3B1627DD1B4884F6001EB36F /* CalendarViewController.swift */,
 				3B2DEEA31ACE67050065F39D /* MainGoalTimerCell.xib */,
 				3B2DEEA51ACE67550065F39D /* MainGoalTimerCell.h */,
 				3B2DEEA61ACE67550065F39D /* MainGoalTimerCell.m */,
-				3B1627DA1B487E4C001EB36F /* Productivity2-Bridging-Header.h */,
+				3B07E7B41B4EC9B700D877D3 /* RestTimerView.xib */,
+				3B07E7B61B4ECA8600D877D3 /* RestTimerView.swift */,
 			);
 			name = views;
 			sourceTree = "<group>";
@@ -284,6 +306,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B07E7B51B4EC9B700D877D3 /* RestTimerView.xib in Resources */,
 				3B2DEE841ACE64C30065F39D /* Main.storyboard in Resources */,
 				3B2DEE891ACE64C30065F39D /* LaunchScreen.xib in Resources */,
 				3B2DEE861ACE64C30065F39D /* Images.xcassets in Resources */,
@@ -316,8 +339,11 @@
 				3B1627DC1B487E4C001EB36F /* ArchiveViewController.swift in Sources */,
 				3BE8E10A1B235C1500B0F677 /* NSNumber+time.m in Sources */,
 				3B2DEE781ACE64C30065F39D /* main.m in Sources */,
+				3B07E7BA1B4ED28300D877D3 /* UIView+ViewBorders.m in Sources */,
 				3B1627D61B486513001EB36F /* PageContentViewController.m in Sources */,
 				3BB7E0C01B26FF4200586C51 /* Session.m in Sources */,
+				3B07E7AF1B4EBA6200D877D3 /* CountDownClockView.swift in Sources */,
+				3B07E7B71B4ECA8600D877D3 /* RestTimerView.swift in Sources */,
 				3B2DEE811ACE64C30065F39D /* ViewController.m in Sources */,
 				3B2DEE7E1ACE64C30065F39D /* Productivity2.xcdatamodeld in Sources */,
 				3B2DEEA71ACE67550065F39D /* MainGoalTimerCell.m in Sources */,

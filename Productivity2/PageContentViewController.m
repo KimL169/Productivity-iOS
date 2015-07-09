@@ -26,17 +26,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
-    
-    if ([gestureRecognizer isKindOfClass:[UISwipeGestureRecognizer class]]) {
-        CGPoint touchPoint = [touch locationInView:self.view];
-       
-        if (touchPoint.x > 50 && touchPoint.x < 430) {
-            return NO;
-        }
-    }
-    return YES;
-}
 /*
 #pragma mark - Navigation
 

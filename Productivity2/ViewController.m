@@ -14,12 +14,20 @@
 #import "Goal+Helper.h" 
 #import "Session.h"
 #import "MainGoalTimerCell.h"
+#import "Productivity2-Swift.h"
+#import "UIView+ViewBorders.h"
+#import <AudioToolbox/AudioToolbox.h>
+#import <QuartzCore/QuartzCore.h>
 
 @interface ViewController ()
 
 @property (nonatomic, strong) GoalTimer *timer;
 @property (nonatomic, strong) NSIndexPath *activeGoalIndex;
 @property (nonatomic) NSUInteger selectedIndex;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *restTimerButton;
+@property (weak, nonatomic) RestTimerView *restTimerView;
+@property (nonatomic, weak) NSNumber *restingSeconds;
+@property (nonatomic, strong) NSTimer *restTimer;
 
 #define NUMBER_OF_SECTIONS 1;
 #define CELL_HEIGHT 120
@@ -143,6 +151,7 @@
         //start a new timer
         [self startNewGoalTimerForIndexPath:indexPath];
     }
+    
 }
 
 - (void)startNewGoalTimerForIndexPath:(NSIndexPath*)indexPath {
@@ -232,7 +241,11 @@
     //make sure the cell's UI get covered when the cell size changes.
     cell.clipsToBounds = YES;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
- 
+    
+#warning incomplete implementation of the color change;
+    //change the clockview color depending on goal completion status
+    [cell changeClockViewColorForGoal:currentSessionForActiveGoal];
+    
 }
 
 -(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -244,7 +257,59 @@
 }
 
 
+- (IBAction)restTimerButtonPressed:(UIBarButtonItem *)sender {
+    
+    self.restTimerView = [RestTimerView instanceFromNib];
+    //get the resting time from the user defaults
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    _restingSeconds = [defaults objectForKey:@"restTime"];
+    
+    //add a little edge to the view and add it to the view;
+    _restTimerView.center = self.view.center;
+    [_restTimerView setUI];
+    [self.view addSubview:_restTimerView];
+    
+    _restTimerView.timerLabel.text = [NSString stringWithFormat:@"%.2d:%.2d:%.2d",[_restingSeconds hours], [_restingSeconds minutesMinusHours], [_restingSeconds secondsMinusMinutesMinutesHours]];
+    
+    //check if a timer is active, if so stop it to start the rest timer.
+    if ([self.timer.timer isValid]) {
+        [self stopTimerForIndexPath:_activeGoalIndex];
+    }
+    
+    //start a new timer for the countdown.
+    _restTimer = [NSTimer timerWithTimeInterval:1 target:self selector:@selector(restTimerCountDown) userInfo:nil repeats:YES];//Timer with interval of one second
+    [[NSRunLoop mainRunLoop] addTimer:_restTimer forMode:NSDefaultRunLoopMode];
+    
+    //disable the user interaction in view and add a gesturecontroll to the restTimerView;
+    [self.tableView setUserInteractionEnabled:NO];
+    UITapGestureRecognizer *gR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissRestTimer)];
+    [_restTimerView addGestureRecognizer:gR];
+}
 
+-(void)dismissRestTimer {
+   //dismiss the rest timer and remove the view
+    [_restTimer invalidate];
+    [_restTimerView removeFromSuperview];
+    //enable user interaction with the view;
+    [self.tableView setUserInteractionEnabled:YES];
+}
+- (void)restTimerCountDown{
+    _restingSeconds = [NSNumber numberWithInt:[_restingSeconds intValue]-1];
+    
+    if ([_restingSeconds intValue] == 0) {
+        //play an alarm and change the view's UI to show the timer is finished.
+        AudioServicesPlaySystemSound(1106);
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+        [_restTimer invalidate];
+        
+        _restTimerView.backgroundColor = [UIColor whiteColor];
+        [_restTimerView.timerLabel setTextColor:[UIColor blackColor]];
+        [_restTimerView.tapToCloseLabel setTextColor:[UIColor blackColor]];
+        _restTimerView.timerLabel.text = @"Time's up! :)";
+    } else {
+        _restTimerView.timerLabel.text = [NSString stringWithFormat:@"%.2d:%.2d:%.2d",[_restingSeconds hours], [_restingSeconds minutesMinusHours], [_restingSeconds secondsMinusMinutesMinutesHours]];
+    }
+}
 
 #pragma mark - segue
 
