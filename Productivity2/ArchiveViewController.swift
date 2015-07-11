@@ -14,16 +14,20 @@ class ArchiveViewController: CoreDataViewController, UITableViewDelegate, UITabl
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tableView.dataSource = self;
+//        tableView.dataSource = self;
         tableView.delegate = self;
+        self.controllerType = ArchiveViewControllerType;
+        
+        self .performFetch()
     }
 
+//    
+//    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+//        var cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell;
+//        
+//        return cell;
+//    }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell;
-        
-        return cell;
-    }
     /*
     // MARK: - Navigation
 

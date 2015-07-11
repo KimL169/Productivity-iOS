@@ -46,15 +46,15 @@
                         </state>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fJY-5l-Hbi">
-                        <rect key="frame" x="0.0" y="0.0" width="52" height="120"/>
+                        <rect key="frame" x="0.0" y="0.0" width="26" height="120"/>
                         <color key="backgroundColor" red="0.33093859265734266" green="0.70754429302015387" blue="0.53753277972027969" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="120" id="8uV-of-z3d"/>
-                            <constraint firstAttribute="width" constant="52" id="mqa-9P-1RW"/>
+                            <constraint firstAttribute="width" constant="26" id="mqa-9P-1RW"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <state key="normal" title="options">
+                        <state key="normal">
                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
@@ -114,7 +114,7 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Goal Name" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4I1-Pj-5wc">
-                        <rect key="frame" x="60" y="46" width="110" height="23.5"/>
+                        <rect key="frame" x="34" y="44" width="116" height="23.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
@@ -130,7 +130,7 @@
                     <constraint firstItem="E1A-LQ-W3t" firstAttribute="height" secondItem="7fx-qd-Amn" secondAttribute="height" id="YN9-So-jSq"/>
                     <constraint firstAttribute="centerY" secondItem="E1A-LQ-W3t" secondAttribute="centerY" constant="-60.75" id="Zbl-il-W4H"/>
                     <constraint firstItem="E1A-LQ-W3t" firstAttribute="height" secondItem="QhG-lw-4Xw" secondAttribute="height" id="b3T-cN-qsn"/>
-                    <constraint firstAttribute="centerX" secondItem="fJY-5l-Hbi" secondAttribute="centerX" constant="133.5" id="deJ-8v-er0"/>
+                    <constraint firstAttribute="centerX" secondItem="fJY-5l-Hbi" secondAttribute="centerX" constant="146.5" id="deJ-8v-er0"/>
                     <constraint firstItem="QhG-lw-4Xw" firstAttribute="top" secondItem="a90-De-kmK" secondAttribute="topMargin" constant="112" id="ei5-EA-xUL"/>
                     <constraint firstAttribute="centerY" secondItem="QhG-lw-4Xw" secondAttribute="centerY" constant="-60.75" id="qeZ-MO-bfP"/>
                     <constraint firstAttribute="centerY" secondItem="7fx-qd-Amn" secondAttribute="centerY" constant="-60.75" id="r5H-6I-uif"/>
@@ -150,10 +150,13 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="clockView" destination="3bO-mi-CGM" id="EtR-ix-kFV"/>
+                <outlet property="moveToArchiveButton" destination="7fx-qd-Amn" id="6j3-Fe-q7h"/>
                 <outlet property="nameLabel" destination="4I1-Pj-5wc" id="U0d-hs-FsT"/>
                 <outlet property="optionsButton" destination="fJY-5l-Hbi" id="hc9-My-ois"/>
                 <outlet property="playPauseLabel" destination="ur6-TX-JGR" id="y7b-Gr-s8Q"/>
+                <outlet property="resetSessionButton" destination="QhG-lw-4Xw" id="IcP-LJ-79Z"/>
                 <outlet property="roundsLabel" destination="yWk-e8-FWO" id="RiS-3F-B4L"/>
+                <outlet property="showProgressButton" destination="E1A-LQ-W3t" id="RTB-3b-pmN"/>
                 <outlet property="timeLabel" destination="Jh8-Ub-MOn" id="bGx-hO-dba"/>
                 <outlet property="totalTimeLabel" destination="kJs-Cf-llV" id="PUo-0J-TIQ"/>
             </connections>

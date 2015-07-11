@@ -151,7 +151,6 @@
 				3B2DEE851ACE64C30065F39D /* Images.xcassets */,
 				3B07E7BF1B4F064000D877D3 /* QuartzCore.framework */,
 				3B07E7BB1B4EDD9900D877D3 /* AudioToolbox.framework */,
-				3B1627DA1B487E4C001EB36F /* Productivity2-Bridging-Header.h */,
 				3B2DEE871ACE64C30065F39D /* LaunchScreen.xib */,
 				3B2DEE791ACE64C30065F39D /* AppDelegate.h */,
 				3B2DEE7A1ACE64C30065F39D /* AppDelegate.m */,
@@ -222,6 +221,7 @@
 				3B2DEEA61ACE67550065F39D /* MainGoalTimerCell.m */,
 				3B07E7B41B4EC9B700D877D3 /* RestTimerView.xib */,
 				3B07E7B61B4ECA8600D877D3 /* RestTimerView.swift */,
+				3B1627DA1B487E4C001EB36F /* Productivity2-Bridging-Header.h */,
 			);
 			name = views;
 			sourceTree = "<group>";
@@ -427,6 +427,8 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -462,6 +464,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};

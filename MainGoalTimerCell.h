@@ -22,6 +22,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *optionsButton;
 @property (strong, nonatomic) IBOutlet CountDownClockView *clockView;
 
+@property (weak, nonatomic) IBOutlet UIButton *moveToArchiveButton;
+@property (weak, nonatomic) IBOutlet UIButton *showProgressButton;
+@property (weak, nonatomic) IBOutlet UIButton *resetSessionButton;
+
 - (void)changeClockViewColorForGoal:(Session *)goal;
 
 @end

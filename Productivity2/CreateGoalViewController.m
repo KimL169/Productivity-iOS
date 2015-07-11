@@ -48,6 +48,8 @@
     _addGoal.plannedRounds = [NSNumber numberWithInt:5];
     _addGoal.plannedSessionTime = [NSNumber numberWithInt:10];
     _addGoal.totalTimeInSeconds = [NSNumber numberWithInt:0];
+    _addGoal.active = [NSNumber numberWithBool:YES];
+    
     return true;
 }
 

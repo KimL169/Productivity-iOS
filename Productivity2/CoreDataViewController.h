@@ -13,6 +13,7 @@
 @interface CoreDataViewController : UIViewController <NSFetchedResultsControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsControllerArchive;
 @property (nonatomic, strong) NSManagedObjectContext *context;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -23,5 +24,11 @@
 - (NSManagedObjectContext *)managedObjectContext;
 - (void)saveManagedObjectContext;
 - (void)performFetch;
+
+typedef enum {
+    ArchiveViewControllerType,
+    SessionViewControllerType
+}typeOfController;
+@property (nonatomic)typeOfController controllerType;
 
 @end

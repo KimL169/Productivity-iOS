@@ -29,6 +29,13 @@
 @property (nonatomic, weak) NSNumber *restingSeconds;
 @property (nonatomic, strong) NSTimer *restTimer;
 
+@property (nonatomic) goalMode activeGoalMode;
+@property (nonatomic) int currentSessionRounds;
+@property (nonatomic, weak) NSNumber *previousSessionTimeInSeconds;
+@property (nonatomic, weak) NSNumber *previousTotalTimeInSeconds;
+@property (nonatomic) int currentSessionTimeInSeconds;
+
+
 #define NUMBER_OF_SECTIONS 1;
 #define CELL_HEIGHT 120
 @end
@@ -41,20 +48,13 @@
     self.timer = [[GoalTimer alloc]init];
     self.tableView.delegate = self;
     self.tableView.delaysContentTouches = NO;
-    
-//    Goal *newGoal = [NSEntityDescription insertNewObjectForEntityForName:@"Goal" inManagedObjectContext:[super managedObjectContext]];
-//    newGoal.name = @"Workout";
-//    newGoal.mode = [NSNumber numberWithInt:GoalCountDownMode];
-//    newGoal.plannedRounds = [NSNumber numberWithInt:5];
-//    newGoal.plannedSessionTime = [NSNumber numberWithInt:10];
-//    newGoal.totalTimeInSeconds = [NSNumber numberWithInt:0];
-//    
-//    //make a new session for the goal.
-//    [newGoal returnCurrentOrNewSession];
+    //set the type so the correct fetchresultscontrollermethods are applied
+    super.controllerType = SessionViewControllerType;
     
    [self performFetch];
-    
+    //selected index for the drop down buttons.
     _selectedIndex = -1;
+   
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -78,27 +78,24 @@
     
     if (object == self.timer && [keyPath isEqualToString:@"countingSeconds"]){
         
-        //get the active goal and adjust the time value
-        Goal* activeGoal = [self.fetchedResultsController objectAtIndexPath:_activeGoalIndex];
+        NSNumber *totalSessionTime = [NSNumber numberWithInt:[_previousSessionTimeInSeconds intValue] + [self.timer.countingSeconds intValue]];
         
-        //get the current session for the goal
-        Session *currentSessionForActiveGoal = [activeGoal returnCurrentOrNewSession];
-       
-        //update session and total time.
-        currentSessionForActiveGoal.sessionTimeInSeconds = self.timer.countingSeconds;
+        NSNumber *totalTime = [NSNumber numberWithDouble:[_previousTotalTimeInSeconds doubleValue] + [self.timer.countingSeconds intValue]];
         
-        //if it's a countdownTimer update the rounds
-        if ([activeGoal.mode intValue] == GoalCountDownMode && [self.timer.countingSeconds intValue]== 0) {
-            currentSessionForActiveGoal.rounds = [NSNumber numberWithInt:[currentSessionForActiveGoal.rounds intValue] + 1];
-            currentSessionForActiveGoal.sessionTimeInSeconds = activeGoal.plannedSessionTime;
+        //get the cell from the active indexpath
+        MainGoalTimerCell *cell = (MainGoalTimerCell*)[self.tableView cellForRowAtIndexPath:_activeGoalIndex];
+        //update the cell label
+        cell.timeLabel.text = [NSString stringWithFormat:@"%.2d:%.2d:%.2d", [totalSessionTime hours], [totalSessionTime minutesMinusHours], [totalSessionTime secondsMinusMinutesMinutesHours]];
+        cell.totalTimeLabel.text = [NSString stringWithFormat:@"%dh %dm", [totalTime hours], [totalTime minutesMinusHours]];
+        
+//        //update session and total time.
+//        currentSessionForActiveGoal.sessionTimeInSeconds = self.timer.countingSeconds;
+//        
+//        if it's a countdownTimer update the rounds
+        if (_activeGoalMode == GoalCountDownMode && [self.timer.countingSeconds intValue]== 0) {
             
-            [self.timer.timer invalidate];
-        }
-        
-        if ([self.timer.countingSeconds intValue] > 0) {
-            int newTotalTime = [activeGoal.totalTimeInSeconds intValue] + 1;
-            NSLog(@"newTotalTime:%d", newTotalTime);
-            activeGoal.totalTimeInSeconds = [NSNumber numberWithInt:newTotalTime];
+#warning Is dit wel goed hier?
+            [self stopTimerForIndexPath:_activeGoalIndex];
         }
         
     }
@@ -108,12 +105,7 @@
 #pragma mark - Tableview methodscontext	
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-   
-    if (_selectedIndex == indexPath.row) {
-        return 240;
-    } else {
-        return 120;
-    }
+   return (_selectedIndex == indexPath.row) ? 240 : 120;
 }
 
 - (void)optionsButtonWasPressed:(id)sender {
@@ -139,6 +131,32 @@
     
 }
 
+- (void)resetSessionButtonPressed:(id)sender {
+    //retrieve the indexpath for the button that was tapped.
+    MainGoalTimerCell *clickedCell = (MainGoalTimerCell *) [[sender superview]superview];
+    NSIndexPath *clickedButtonPath = [self.tableView indexPathForCell:clickedCell];
+    
+}
+- (void)showProgressButtonPressed:(id)sender {
+    MainGoalTimerCell *clickedCell = (MainGoalTimerCell *) [[sender superview]superview];
+    NSIndexPath *clickedButtonPath = [self.tableView indexPathForCell:clickedCell];
+    
+}
+
+- (void)moveToArchiveButtonPressed:(id)sender {
+    MainGoalTimerCell *clickedCell = (MainGoalTimerCell *) [[sender superview]superview];
+    NSIndexPath *clickedButtonPath = [self.tableView indexPathForCell:clickedCell];
+   
+    //set the goal to inactive.
+    Goal *goal = [self.fetchedResultsController objectAtIndexPath:clickedButtonPath];
+    [goal setActive:[NSNumber numberWithBool:NO]];
+    [self saveManagedObjectContext];
+    [self.tableView reloadData];
+#warning hier gaat iets mis. als ik de archive button indruk terwijl de timer loopt krijg ik een error
+    
+}
+
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //check if a timer is running, if it is, stop the timer and save the timer data to the active goal.
     //if it's not, restart a new timer for the goal that is clicked.
@@ -162,14 +180,18 @@
     
     //make the newly selected goal the active goal
     Goal *activeGoal = [self.fetchedResultsController objectAtIndexPath:_activeGoalIndex];
+    
     //get the current session for the acitve goal
     Session *currentSessionForActiveGoal = [activeGoal returnCurrentOrNewSession];
+    
+    //set the local values for storing the previous session and total time.
+    _previousSessionTimeInSeconds = currentSessionForActiveGoal.sessionTimeInSeconds;
+    _previousTotalTimeInSeconds = activeGoal.totalTimeInSeconds;
     
     switch ([activeGoal.mode intValue]) {
         case GoalCountDownMode:
             if ([currentSessionForActiveGoal.sessionTimeInSeconds intValue] == 0) {
                 currentSessionForActiveGoal.sessionTimeInSeconds = activeGoal.plannedSessionTime;
-                NSLog(@"sessiontime %d", [currentSessionForActiveGoal.sessionTimeInSeconds intValue]);
             }
             break;
         case GoalStopWatchMode:
@@ -189,16 +211,9 @@
         //stop the timer
         [self.timer.timer invalidate];
     
+    //save the new time to the session by adding the current session time to the previous session time.
+    
 //TODO: if countdown it needs to finish the session in order to be counted!!
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        Goal *goalToDelete = [self.fetchedResultsController objectAtIndexPath:indexPath];
-        
-        [[self managedObjectContext] deleteObject:goalToDelete];
-        [self saveManagedObjectContext];
-    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -219,7 +234,7 @@
     
     Goal *goal = [self.fetchedResultsController objectAtIndexPath:indexPath];
     Session *currentSessionForActiveGoal = [goal returnCurrentOrNewSession];
-    NSLog(@"rounds: %d", [currentSessionForActiveGoal.rounds intValue]);
+    
     cell.nameLabel.text = goal.name;
     cell.timeLabel.text = [NSString stringWithFormat:@"%.2d:%.2d:%.2d", [currentSessionForActiveGoal.sessionTimeInSeconds hours], [currentSessionForActiveGoal.sessionTimeInSeconds minutesMinusHours], [currentSessionForActiveGoal.sessionTimeInSeconds secondsMinusMinutesMinutesHours]];
     
@@ -237,6 +252,9 @@
         cell.playPauseLabel.text = @"▶︎";
     }
     [cell.optionsButton addTarget:self action:@selector(optionsButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [cell.moveToArchiveButton addTarget:self action:@selector(moveToArchiveButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [cell.resetSessionButton addTarget:self action:@selector(resetSessionButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [cell.showProgressButton addTarget:self action:@selector(showProgressButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     //make sure the cell's UI get covered when the cell size changes.
     cell.clipsToBounds = YES;
@@ -248,15 +266,7 @@
     
 }
 
--(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
-}
-
--(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return UITableViewCellEditingStyleDelete;
-}
-
-
+#pragma Rest Timer Methods
 - (IBAction)restTimerButtonPressed:(UIBarButtonItem *)sender {
     
     self.restTimerView = [RestTimerView instanceFromNib];

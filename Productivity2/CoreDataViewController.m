@@ -10,6 +10,11 @@
 #import "Goal.h"
 #import "Goal+Helper.h"
 #import "MainGoalTimerCell.h"
+#import "Productivity2-Swift.h"
+
+@interface CoreDataViewController()
+
+@end
 
 @implementation CoreDataViewController
 
@@ -67,11 +72,19 @@
     //sort on patients last name, ascending;
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc]initWithKey:@"dateCreated" ascending:YES];
     
+    NSPredicate *predicate;
+    if (_controllerType == ArchiveViewControllerType) {
+        predicate = [NSPredicate predicateWithFormat:@"active == %@",[NSNumber numberWithBool:NO]];
+    } else {
+        predicate = [NSPredicate predicateWithFormat:@"active == %@",[NSNumber numberWithBool:YES]];
+    }
+    
     //make an array of the descriptor because the fetchrequest argument takes an array.
     NSArray *sortDescriptors = [[NSArray alloc]initWithObjects:sortDescriptor, nil];
     
     //now assign the sort descriptors to the fetchrequest.
     fetchRequest.sortDescriptors = sortDescriptors;
+    fetchRequest.predicate = predicate;
     
     _fetchedResultsController = [[NSFetchedResultsController alloc]initWithFetchRequest:fetchRequest managedObjectContext:_context sectionNameKeyPath:nil cacheName:nil];
     
